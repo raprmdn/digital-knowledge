@@ -32,7 +32,6 @@ class ArticleRepository implements ArticleRepositoryInterface {
 
     public function saveData($attribute)
     {
-
         try {
             $category = Category::findOrFail($attribute['article_category']);
             Tag::findOrFail($attribute['article_tag']);

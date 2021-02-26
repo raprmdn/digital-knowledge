@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Dashboard\Permissions\{RoleController, PermissionController, PermissionToRoleController, 
     RoleToUserController};
-use App\Http\Controllers\Dashboard\{DashboardController, ArticleController, CategoryController, TagController};
+use App\Http\Controllers\Dashboard\{DashboardController, ArticleController, CategoryController, ListDataController, TagController};
 use App\Http\Controllers\Dashboard\ManageMenu\ManageMenuController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -78,6 +78,11 @@ Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 
         Route::get('main-menu/{menu}/update', [ManageMenuController::class, 'editMainMenu'])->name('main.menu.edit');
         Route::put('main-menu/{menu}/update', [ManageMenuController::class, 'updateMainMenu']);
         Route::delete('menu/{menu}/delete', [ManageMenuController::class, 'destroy'])->name('menu.delete');
+    });
+
+    Route::prefix('data-article-and-user')->middleware('permission:list all')->group( function() {
+        Route::get('article-list', [ListDataController::class, 'indexDataArticles'])->name('data.article.index');
+        Route::get('user-list', [ListDataController::class, 'indexDataUsers'])->name('data.user.index');
     });
 
 });
