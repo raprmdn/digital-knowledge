@@ -21,12 +21,20 @@ class ArticlePolicy
 
     public function update(User $user, Article $article) 
     {
-        return $user->id === $article->article_user_id;
+        if ($user->hasRole('admin')){
+            return true;
+        } else {
+            return $user->id === $article->article_user_id;
+        }
     }
 
     public function delete(User $user, Article $article) 
     {
-        return $user->id === $article->article_user_id;
+        if ($user->hasRole('admin')) {
+            return true;
+        } else {
+            return $user->id === $article->article_user_id;
+        }
     }
     
 }
