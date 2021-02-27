@@ -2,14 +2,14 @@
 
 use App\Http\Controllers\Dashboard\Permissions\{RoleController, PermissionController, PermissionToRoleController, 
     RoleToUserController};
-use App\Http\Controllers\Dashboard\{DashboardController, ArticleController, CategoryController, ListDataController, TagController};
+use App\Http\Controllers\Dashboard\{DashboardController, ArticleController, CategoryController, ListDataController, RecycleBinController, TagController};
 use App\Http\Controllers\Dashboard\ManageMenu\ManageMenuController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
-});
+})->middleware(['active_user']);
 
 Auth::routes(['verify' => true]);
 
@@ -83,6 +83,13 @@ Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 
     Route::prefix('data-article-and-user')->middleware('permission:list all')->group( function() {
         Route::get('article-list', [ListDataController::class, 'indexDataArticles'])->name('data.article.index');
         Route::get('user-list', [ListDataController::class, 'indexDataUsers'])->name('data.user.index');
+        Route::post('{user}/suspend', [ListDataController::class, 'suspend'])->name('data.user.suspend');
+        Route::post('{user}/recovery', [ListDataController::class, 'recovery'])->name('data.user.recovery');
+    });
+
+    Route::prefix('recycle-bin')->middleware('permission:list all')->group( function() {
+        Route::get('articles', [RecycleBinController::class, 'articleTrash'])->name('trash.article.index');
+        // Route::get('users', [RecycleBinController::class, 'userTrash'])->name('trash.user.index');
     });
 
 });

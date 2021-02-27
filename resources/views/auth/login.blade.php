@@ -11,6 +11,11 @@
                 </div>
             </div>
         </div>
+        @if (session('suspend'))
+            <div class="alert alert-fill alert-danger alert-icon">
+                <em class="icon ni ni-cross-circle"></em>{{ session('suspend') }}
+            </div>
+        @endif
         <form action="{{ route('login') }}" method="post">
             @csrf
             <div class="form-group">
