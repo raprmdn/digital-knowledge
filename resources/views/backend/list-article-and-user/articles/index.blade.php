@@ -8,7 +8,7 @@
                 <nav class="mb-3">
                     <ul class="breadcrumb breadcrumb-arrow">
                         <li class="breadcrumb-item"><a href="{{ route('menu.dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Articles</li>
+                        <li class="breadcrumb-item active">Data Articles & Users</li>
                         <li class="breadcrumb-item active"><a href="{{ route('data.article.index') }}">List All Article</a></li>
                     </ul>
                 </nav>
