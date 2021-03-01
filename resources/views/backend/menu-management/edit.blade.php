@@ -87,7 +87,7 @@
                                             <div class="form-group">
                                                 <label class="form-label" for="url">Url</label>
                                                 <input type="text" class="form-control @error('url') is-invalid @enderror" id="url" name="url"
-                                                value="menu/dashboard/{{ old('url') ?? $menu->url }}">
+                                                value="{{ old('url') ?? $menu->url }}">
                                                 <em class="icon ni ni-alert-circle text-danger"></em>
                                                 <small class="text-danger">
                                                     <span>Url Parent : slug parent menu. Example : menu-management</span>

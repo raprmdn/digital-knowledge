@@ -63,6 +63,7 @@
                                             <tr>
                                                 <th scope="col">Parent Menu</th>
                                                 <th scope="col">Icon</th>
+                                                <th scope="col">Action</th>
                                                 <th scope="col">Sub Menu</th>
                                                 <th scope="col">Url</th>
                                                 <th scope="col">Permission</th>
@@ -74,6 +75,25 @@
                                             <tr>
                                                 <th rowspan="{{ $menu->children->count() + 1 }}" scope="rowgroup"><span class="badge badge-pill badge-danger">{{ $menu->name }}</span></th>
                                                 <td rowspan="{{ $menu->children->count() + 1 }}" scope="rowgroup"> <em class="{{ $menu->icon }}"></em> ( {{ $menu->icon }} )</td>
+                                                <td rowspan="{{ $menu->children->count() + 1 }}" scope="rowgroup">
+                                                    <ul class="nk-tb-actions gx-1">
+                                                        <li>
+                                                            <div class="drodown">
+                                                                <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li><a href="{{ route('main.menu.edit', $menu) }}"><em class="icon ni ni-setting"></em><span>Parent Menu Setting</span></a></li>
+                                                                        <form action="{{ route('menu.delete', $menu) }}" method="post">
+                                                                            @csrf
+                                                                            @method('delete')
+                                                                            <li><button type="submit" class="btn"><em class="icon ni ni-trash"></em><span>Main Menu Remove</span></button></li>
+                                                                        </form>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </td>
                                                 @foreach ($menu->children as $item)
                                                 <tr>
                                                     <td>{{ $item->name }}</td>
@@ -86,12 +106,6 @@
                                                                     <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                                     <div class="dropdown-menu dropdown-menu-right">
                                                                         <ul class="link-list-opt no-bdr">
-                                                                            <li><a href="{{ route('main.menu.edit', $menu) }}"><em class="icon ni ni-setting"></em><span>Parent Menu Setting</span></a></li>
-                                                                            <form action="{{ route('menu.delete', $menu) }}" method="post">
-                                                                                @csrf
-                                                                                @method('delete')
-                                                                                <li><button type="submit" class="btn"><em class="icon ni ni-trash"></em><span>Main Menu Remove</span></button></li>
-                                                                            </form>
                                                                             <li><a href="{{ route('menu.menu.edit', $item) }}"><em class="icon ni ni-setting"></em><span>Sub Menu Setting</span></a></li>
                                                                             <form action="{{ route('menu.delete', $item) }}" method="post">
                                                                                 @csrf

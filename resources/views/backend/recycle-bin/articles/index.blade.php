@@ -8,16 +8,16 @@
                 <nav class="mb-3">
                     <ul class="breadcrumb breadcrumb-arrow">
                         <li class="breadcrumb-item"><a href="{{ route('menu.dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Data Articles & Users</li>
-                        <li class="breadcrumb-item active"><a href="{{ route('data.article.index') }}">List All Article</a></li>
+                        <li class="breadcrumb-item active">Recycle Bin</li>
+                        <li class="breadcrumb-item active"><a href="{{ route('trash.article.index') }}">Trashed Articles</a></li>
                     </ul>
                 </nav>
                 <div class="nk-block-head nk-block-head-sm">
                     <div class="nk-block-between">
                         <div class="nk-block-head-content">
-                            <h3 class="nk-block-title page-title">List All Article</h3>
+                            <h3 class="nk-block-title page-title">Trashed Articles</h3>
                             <div class="nk-block-des text-soft">
-                                <p>Total articles in this website : {{ $articles->total() }} articles</p>
+                                <p>Total articles in recycle bin : {{ $articles->total() }} articles</p>
                             </div>
                         </div>
                         <div class="nk-block-head-content">
@@ -45,10 +45,6 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        {{-- <li class="nk-block-tools-opt">
-                                            <a href="{{ route('menu.article.create') }}" class="btn btn-icon btn-primary d-md-none"><em class="icon ni ni-plus"></em></a>
-                                            <a href="{{ route('menu.article.create') }}" class="btn btn-primary d-none d-md-inline-flex"><em class="icon ni ni-plus"></em><span>Create Article</span></a>
-                                        </li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -127,7 +123,10 @@
                                                     <td>{{ $article->created_at->format('d F Y, H:i') }}</td>
                                                     <td>
                                                         <div class="d-block">
-                                                            <a href="#" class="btn btn-sm btn-info mb-1"><em class="icon ni ni-undo"></em><span>Restore</span></a>
+                                                            <form action="{{ route('trash.article.restore', $article->article_slug) }}" method="post">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-sm btn-info mb-1"><em class="icon ni ni-undo"></em><span>Restore</span></button>
+                                                            </form>
                                                             <form action="" method="post">
                                                                 @csrf
                                                                 @method('delete')
