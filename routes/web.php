@@ -88,7 +88,8 @@ Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 
     });
 
     Route::prefix('recycle-bin')->middleware('permission:list all')->group( function() {
-        Route::get('articles', [RecycleBinController::class, 'articleTrash'])->name('trash.article.index');
+        Route::get('article', [RecycleBinController::class, 'articleTrash'])->name('trash.article.index');
+        Route::post('article/{article:article_slug}/restore', [RecycleBinController::class, 'articleRestore'])->name('trash.article.restore');
         // Route::get('users', [RecycleBinController::class, 'userTrash'])->name('trash.user.index');
     });
 

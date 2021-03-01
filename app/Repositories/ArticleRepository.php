@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Models\Tag;
 use App\Models\Article;
 use App\Models\Category;
+use DOMDocument;
+use Exception;
 use Illuminate\Http\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -35,10 +37,41 @@ class ArticleRepository implements ArticleRepositoryInterface {
         try {
             $category = Category::findOrFail($attribute['article_category']);
             Tag::findOrFail($attribute['article_tag']);
-        } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
 
+        // Assign Content with all image etc
+        $content = $attribute['article_content'];
+
+        libxml_use_internal_errors(true);
+        $dom = new \DOMDocument();
+        $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $images = $dom->getElementsByTagName('img');
+        
+        foreach ( $images as $key => $image ) {
+
+            $src = $image->getAttribute('src');
+
+            if ( preg_match('/data:image/', $src) ) {
+                preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
+                $mimeType = $groups['mime'];
+                $path = '/articles/content/' . uniqid('', true) . '.' . $mimeType;
+                Storage::disk('public')->put($path, file_get_contents($src));
+                $newSource = asset('/storage' . $path);
+                $image->removeAttribute('src');
+                $image->setAttribute('src', $newSource);
+                
+                // with storage
+                // $image->removeAttribute('src');
+                // $image->setAttribute('src', Storage::disk('public')->url($path));
+            }
+
+        }
+        
+        $content = $dom->saveHTML();
+        
+        // Assign Thumbnail For an Article
         $slug = Str::slug($attribute['article_title']);
 
         $thumbnail = $attribute['article_thumbnail'];
@@ -56,7 +89,7 @@ class ArticleRepository implements ArticleRepositoryInterface {
             'article_category_id' => $category->id,
             'article_title' => $attribute['article_title'],
             'article_slug' => $slug,
-            'article_content' => $attribute['article_content'],
+            'article_content' => $content,
             'article_thumbnail' => $attribute['article_thumbnail'],
             'article_status' => $attribute['article_status'] ? 'Publish' : 'Unlisted',
         ]);

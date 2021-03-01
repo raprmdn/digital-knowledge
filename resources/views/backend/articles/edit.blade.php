@@ -55,8 +55,8 @@
 
                                     <div class="form-group">
                                         <label class="form-label" for="article_content">Article Content</label>
-                                        {{-- <div class="summernote-basic" name="article_content"></div> --}}
-                                        <textarea class="form-control form-control-sm" id="article_content" name="article_content" placeholder="Write your message">{{ $article->article_content }}</textarea>
+                                        <textarea class="summernote-basic @error('article_content') is-invalid @enderror" name="article_content" id="summernote">{!! $article->article_content !!}</textarea>
+                                        {{-- <textarea class="form-control form-control-sm" id="article_content" name="article_content" placeholder="Write your message">{{ $article->article_content }}</textarea> --}}
                                         @error('article_content')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

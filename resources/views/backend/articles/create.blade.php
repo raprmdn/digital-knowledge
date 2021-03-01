@@ -53,8 +53,8 @@
 
                                     <div class="form-group">
                                         <label class="form-label" for="article_content">Article Content</label>
-                                        {{-- <div class="summernote-basic" name="article_content"></div> --}}
-                                        <textarea class="form-control form-control-sm" id="article_content" name="article_content" placeholder="Write your message"></textarea>
+                                        <textarea class="summernote-basic @error('article_content') is-invalid @enderror" name="article_content" id="summernote"></textarea>
+                                        {{-- <textarea class="form-control form-control-sm" id="article_content" name="article_content" placeholder="Write your message"></textarea> --}}
                                         @error('article_content')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -151,4 +151,11 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/css/editors/summernote.css?ver=2.2.0') }}">
     <script src="{{ asset('backend/assets/js/libs/editors/summernote.js?ver=2.2.0') }}"></script>
     <script src="{{ asset('backend/assets/js/editors.js?ver=2.2.0') }}"></script>
+    <script>
+        $(document).ready(function() {
+          $('.summernote').summernote({
+              height: 1000,
+          });
+        });
+    </script>
 @endpush

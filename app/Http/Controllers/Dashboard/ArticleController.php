@@ -47,7 +47,7 @@ class ArticleController extends Controller
             $this->articleRepository->saveData($attribute);
             return redirect()->back()->with('success', 'Successfully create a new article.');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong.');
+            return redirect()->back()->with('error', $e);
         }
     }
 

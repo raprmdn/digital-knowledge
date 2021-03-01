@@ -20,4 +20,12 @@ class RecycleBinController extends Controller
         return view('backend.recycle-bin.user.index');
     }
 
+    public function articleRestore($article) 
+    {
+        $article = Article::onlyTrashed()->first();
+        $article->restore();
+
+        return redirect()->back()->with('success', 'Article has been restored.');
+    }
+
 }
