@@ -6,6 +6,7 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 
 class ListDataController extends Controller
 {
@@ -41,7 +42,7 @@ class ListDataController extends Controller
             'suspend_user' => null
         ]);
 
-        return redirect()->back()->with('success', "Success Suspend User {$user->email}");
+        return redirect()->back()->with('success', "Success Recovery User {$user->email}");
     }
 
 }

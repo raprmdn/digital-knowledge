@@ -80,6 +80,7 @@
                                                 <th scope="col">Verified Email</th>
                                                 <th scope="col">User Status</th>
                                                 <th scope="col">Joined At</th>
+                                                <th scope="col">Banned Until</th>
                                                 <th scope="col">Action</th>
                                             </tr><!-- .nk-tb-item -->
                                         </thead>
@@ -115,6 +116,11 @@
                                                         @endif
                                                     </td>
                                                     <td>{{ $user->created_at->format('d F Y, H:i') }}</td>
+                                                    <td>
+                                                        @if ($user->suspend_user)
+                                                            {{ Carbon\Carbon::parse($user->suspend_user)->format('d F Y, H:i') }}
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         <div class="row">
                                                             @if (now()->lessThan($user->suspend_user))
