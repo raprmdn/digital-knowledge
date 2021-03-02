@@ -64,7 +64,7 @@
                                         <tbody>
                                             @forelse ($tags as $key => $tag)
                                                 <tr>
-                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>{{ $tags->firstItem() + $key }}</td>
                                                     <td>{{ $tag->tag_name }}</td>
                                                     <td>{{ $tag->tag_slug }}</td>
                                                     <td>{{ $tag->created_at }}</td>

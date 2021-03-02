@@ -64,9 +64,30 @@ class ArticleController extends Controller
         return view('backend.articles.edit', compact('article', 'categories', 'tags'));
     }
 
-    public function update(ArticleRequest $request, Article $article)
+    public function update(Request $request, Article $article)
     {
-        dd(request()->all());
+        request()->validate([
+            'article_title' => ['required', 'min:10'],
+            'article_content' => ['required', 'min:1'],
+            'article_thumbnail' => ['mimes:jpeg,jpg,png', 'max:5000'],
+            'article_category' => ['required'],
+            'article_tag' => ['required', 'max:5'],
+        ]);
+
+        try {
+            $attribute = request()->all();
+            
+            if ( request()->file('article_thumbnail') ) {
+                $attribute['article_thumbnail'] = request('article_thumbnail');
+            } else {
+                $attribute['article_thumbnail'] = null;
+            }
+
+            $this->articleRepository->updateData($article, $attribute);
+            return redirect()->route('menu.article.index')->with('success', 'Successfully update the article.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e);
+        }
     }
 
     public function destroy(Article $article)

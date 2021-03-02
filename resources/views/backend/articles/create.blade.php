@@ -53,8 +53,7 @@
 
                                     <div class="form-group">
                                         <label class="form-label" for="article_content">Article Content</label>
-                                        <textarea class="summernote-basic @error('article_content') is-invalid @enderror" name="article_content" id="summernote"></textarea>
-                                        {{-- <textarea class="form-control form-control-sm" id="article_content" name="article_content" placeholder="Write your message"></textarea> --}}
+                                        <textarea class="summernote @error('article_content') is-invalid @enderror" name="article_content" id="summernote">{!! old('article_content') !!}</textarea>
                                         @error('article_content')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

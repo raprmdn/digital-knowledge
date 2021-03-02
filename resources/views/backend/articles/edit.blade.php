@@ -55,8 +55,7 @@
 
                                     <div class="form-group">
                                         <label class="form-label" for="article_content">Article Content</label>
-                                        <textarea class="summernote-basic @error('article_content') is-invalid @enderror" name="article_content" id="summernote">{!! $article->article_content !!}</textarea>
-                                        {{-- <textarea class="form-control form-control-sm" id="article_content" name="article_content" placeholder="Write your message">{{ $article->article_content }}</textarea> --}}
+                                        <textarea class="summernote @error('article_content') is-invalid @enderror" name="article_content" id="summernote">{!! old('article_content') ?? $article->article_content !!}</textarea>
                                         @error('article_content')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -148,7 +147,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-md btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-md btn-primary">Update</button>
                                     </div>
 
                                 </div>
@@ -176,4 +175,29 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/css/editors/summernote.css?ver=2.2.0') }}">
     <script src="{{ asset('backend/assets/js/libs/editors/summernote.js?ver=2.2.0') }}"></script>
     <script src="{{ asset('backend/assets/js/editors.js?ver=2.2.0') }}"></script>
+    <script>
+        $(document).ready(function() {
+          $('.summernote').summernote({
+              height: 1000,
+              callbacks: {
+                    onMediaDelete : function(target) {
+                        console.log([target[0].src]);
+                        // deleteFile(target[0].src);
+                    }
+                }
+          });
+        });
+
+        function deleteFile(src) {
+            $.ajax({
+                data: {src : src},
+                type: "POST",
+                url: "asd",
+                cache: false,
+                success: function(resp) {
+                    console.log(resp);
+                }
+            });
+        }
+    </script>
 @endpush

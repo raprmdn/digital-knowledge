@@ -65,7 +65,7 @@
                                         <tbody>
                                             @forelse ($categories as $key => $category)
                                                 <tr>
-                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>{{ $categories->firstItem() + $key }}</td>
                                                     <td>{{ $category->category_name }}</td>
                                                     <td>{{ $category->category_slug }}</td>
                                                     <td>{{ $category->category_description }}</td>
