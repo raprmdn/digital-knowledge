@@ -124,48 +124,14 @@
                                                     <td>
                                                         <div class="row">
                                                             @if (now()->lessThan($user->suspend_user))
-                                                            <form action="{{ route('data.user.recovery', $user) }}" method="post">
-                                                                @csrf
-                                                                <button class="btn btn-sm btn-success mr-1"><em class="icon ni ni-undo"></em></em>&nbsp;Recover User</button>
-                                                            </form>
+                                                                <form action="{{ route('data.user.recovery', $user) }}" method="post">
+                                                                    @csrf
+                                                                    @method('put')
+                                                                    <button class="btn btn-sm btn-success mr-1"><em class="icon ni ni-undo"></em></em>&nbsp;Recover User</button>
+                                                                </form>
                                                             @else
-                                                                <button type="button" class="btn btn-sm btn-danger mr-1" data-toggle="modal" data-target="#modalForm"><em class="icon ni ni-na"></em>&nbsp;Suspend User</button>
+                                                                <button type="button" class="btn btn-sm btn-danger mr-1 suspendButton" data-toggle="modal" data-target="#modal" data-id="{{ $user->id }}"><em class="icon ni ni-na"></em>&nbsp;Suspend User</button>
                                                             @endif
-                                                            <div class="modal fade" tabindex="-1" id="modalForm" style="display: none;" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title">Susped User</h5>
-                                                                            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <em class="icon ni ni-cross"></em>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                        <form action="{{ route('data.user.suspend', $user) }}" method="post">
-                                                                            @csrf
-                                                                            <div class="form-group">
-                                                                                <label class="form-label">Suspend Until</label>
-                                                                                <div class="form-control-wrap">
-                                                                                    <div class="form-icon form-icon-left">
-                                                                                        <em class="icon ni ni-calendar"></em>
-                                                                                    </div>
-                                                                                    <input type="text" class="form-control date-picker @error('suspend_until') is-invalid @enderror" data-date-format="yyyy-mm-dd" name="suspend_until">
-                                                                                    @error('suspend_until')
-                                                                                        <span class="invalid-feedback" role="alert">
-                                                                                            <strong>{{ $message }}</strong>
-                                                                                        </span>
-                                                                                    @enderror
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="form-group">
-                                                                                <button type="submit" class="btn btn-sm btn-block btn-danger">Confirm</button>
-                                                                            </div>
-                                                                        </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -194,26 +160,61 @@
         </div>
     </div>
 </div>
+<form action="{{ route('data.user.suspend') }}" method="post">
+    @csrf
+    @method('put')
+    <input type="hidden" name="id" id="id">
+    <div class="modal fade" tabindex="-1" id="modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formModalLabel">Suspend User</h5>
+                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Suspend Until</label>
+                        <div class="form-control-wrap">
+                            <div class="form-icon form-icon-left">
+                                <em class="icon ni ni-calendar"></em>
+                            </div>
+                            <input type="text" class="form-control date-picker @error('suspend_until') is-invalid @enderror" data-date-format="yyyy-mm-dd" name="suspend_until">
+                            @error('suspend_until')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-sm btn-block btn-danger">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 @endsection
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script>
-         $('.delete-confirm').click(function(event) {
-            var form =  $(this).closest("form");
-            var name = $(this).data("name");
-            event.preventDefault();
-            swal({
-                title: `Are you sure you want to delete "${name}"?`,
-                text: "You won't be able to revert this!.",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((result) => {
-                if (result) {
-                form.submit();
+        
+        $('.suspendButton').on('click', function (e) {
+            const id = $(this).data('id');
+            $('.modal-body form').attr('action', "{{ route('data.user.suspend') }}");
+            $.ajax({
+                data: { id: id, "_token": "{{ csrf_token() }}",},
+                url: "{{ route('data.user.detail') }}",
+                method: 'PUT',
+                dataType: 'json',
+                success: function (data) {
+                    $('#formModalLabel').html('Suspend User : ' + data.name);
+                    $('#id').val(data.id);
                 }
             });
+
         });
     </script>
 @endpush
