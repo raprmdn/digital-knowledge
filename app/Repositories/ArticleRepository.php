@@ -7,6 +7,7 @@ use DOMDocument;
 use App\Models\Tag;
 use App\Models\Article;
 use App\Models\Category;
+use Carbon\Carbon;
 use Illuminate\Http\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -76,12 +77,15 @@ class ArticleRepository implements ArticleRepositoryInterface {
             throw new Exception($e->getMessage());
         }
         
+        // Assign Content
         $contentArticle = $attribute['article_content'];
         $content = $this->assignArticleContent($contentArticle);
         
+        // Assign Thumbnail and Slug
         $slug = Str::slug($attribute['article_title']);
         $thumbnail = $attribute['article_thumbnail'];
 
+        // Check thumbnail if exists
         if ( $thumbnail ) {
             Storage::delete($article->article_thumbnail);
             $thumbnailName = $this->assignArticleThumbnail($thumbnail, $slug);
@@ -90,14 +94,16 @@ class ArticleRepository implements ArticleRepositoryInterface {
             $attribute['article_thumbnail'] = $article->article_thumbnail;
         }
 
+        $attribute['edited_at'] = Carbon::now();
+        
         $article->update([
-            'article_user_id' => auth()->user()->id,
             'article_category_id' => $category->id,
             'article_title' => $attribute['article_title'],
             'article_slug' => $slug,
             'article_content' => $content,
             'article_thumbnail' => $attribute['article_thumbnail'],
             'article_status' => $attribute['article_status'] ? 'Publish' : 'Unlisted',
+            'edited_at' => $attribute['edited_at'],
         ]);
 
         $result = $article->tags()->sync($attribute['article_tag']);
@@ -163,6 +169,14 @@ class ArticleRepository implements ArticleRepositoryInterface {
         Storage::disk('public')->put('articles/thumbnail' . '/' . $thumbnailName, $image, 'public');
 
         return $thumbnailName;
+    }
+
+    public function deleteImageContent($src) 
+    {
+        $path = asset('/storage');
+        $file_name = str_replace($path, '', $src);
+        $result = Storage::delete($file_name);
+        return $result;
     }
 
 }

@@ -96,8 +96,7 @@
                                                     <td>{{ $articles->firstItem() + $key }}</td>
                                                     <td>{{ $article->article_title }}</td>
                                                     <td>{{ $article->article_slug }}</td>
-                                                    {{-- <td>{!! Str::limit(strip_tags($article->article_content), $limit = 50, '...') !!}</td> --}}
-                                                    <td>{!! $article->article_content !!}</td>
+                                                    <td>{!! Str::limit(strip_tags($article->article_content), $limit = 75, '...') !!}</td>
                                                     <td>
                                                         <img src="{{ $article->takeImage }}" width="250" height="150" alt="{{ $article->article_slug }}">
                                                     </td>

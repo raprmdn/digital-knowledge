@@ -143,7 +143,11 @@
 
                                     <div class="form-group">
                                         <p class="fw-bold">Last Edited at </p>
-                                        {{ $article->edited_at ?? '-' }}
+                                        @if ($article->edited_at)
+                                            {{ Carbon\Carbon::parse($article->edited_at)->format('d F Y , H:i') }}
+                                        @else
+                                            -
+                                        @endif
                                     </div>
 
                                     <div class="form-group">
@@ -181,8 +185,8 @@
               height: 1000,
               callbacks: {
                     onMediaDelete : function(target) {
-                        console.log([target[0].src]);
-                        // deleteFile(target[0].src);
+                        // console.log([target[0].src]);
+                        deleteFile(target[0].src);
                     }
                 }
           });
@@ -190,12 +194,12 @@
 
         function deleteFile(src) {
             $.ajax({
-                data: {src : src},
+                data: {src : src, "_token": "{{ csrf_token() }}",},
                 type: "POST",
-                url: "asd",
+                url: '{{ route("menu.delete.content.image") }}',
                 cache: false,
                 success: function(resp) {
-                    console.log(resp);
+                    // console.log(resp);
                 }
             });
         }

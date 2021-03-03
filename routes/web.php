@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Dashboard\Permissions\{RoleController, PermissionController, PermissionToRoleController, 
     RoleToUserController};
-use App\Http\Controllers\Dashboard\{DashboardController, ArticleController, CategoryController, ListDataController, RecycleBinController, TagController};
+use App\Http\Controllers\Dashboard\{DashboardController, ArticleController, CategoryController, ListDataController, RecycleBinController, TagController, UserController};
 use App\Http\Controllers\Dashboard\ManageMenu\ManageMenuController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -13,7 +13,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 'verified')->group( function() {
+Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 'verified', 'active_user')->group( function() {
     Route::get('panel', [DashboardController::class, 'index'])->name('menu.dashboard');
 
     Route::prefix('articles')->middleware('permission:create article')->group( function() {
@@ -23,6 +23,7 @@ Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 
         Route::get('{article:article_slug}/edit', [ArticleController::class, 'edit'])->name('menu.article.edit');
         Route::put('{article:article_slug}/edit', [ArticleController::class, 'update']);
         Route::delete('{article:article_slug}/edit', [ArticleController::class, 'destroy'])->name('menu.article.delete');
+        Route::post('/image-content/delete', [ArticleController::class, 'deleteContentImage'])->name('menu.delete.content.image');
     });
 
     Route::prefix('categories')->middleware('permission:create category')->group( function() {
@@ -83,14 +84,20 @@ Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 
     Route::prefix('data-article-and-user')->middleware('permission:list all')->group( function() {
         Route::get('article-list', [ListDataController::class, 'indexDataArticles'])->name('data.article.index');
         Route::get('user-list', [ListDataController::class, 'indexDataUsers'])->name('data.user.index');
-        Route::post('{user}/suspend', [ListDataController::class, 'suspend'])->name('data.user.suspend');
-        Route::post('{user}/recovery', [ListDataController::class, 'recovery'])->name('data.user.recovery');
+        Route::put('user/detail', [ListDataController::class, 'userDetail'])->name('data.user.detail');
+        Route::put('user/suspend', [ListDataController::class, 'suspend'])->name('data.user.suspend');
+        Route::put('{user}/recovery', [ListDataController::class, 'recovery'])->name('data.user.recovery');
     });
 
     Route::prefix('recycle-bin')->middleware('permission:list all')->group( function() {
         Route::get('article', [RecycleBinController::class, 'articleTrash'])->name('trash.article.index');
         Route::post('article/{article:article_slug}/restore', [RecycleBinController::class, 'articleRestore'])->name('trash.article.restore');
         // Route::get('users', [RecycleBinController::class, 'userTrash'])->name('trash.user.index');
+    });
+
+    Route::prefix('profile')->group( function() {
+        Route::get('/p/information', [UserController::class, 'personalInformation'])->name('profile.personal.information');
+        Route::get('/p/security-settings', [UserController::class, 'securitySettings'])->name('profile.personal.settings');
     });
 
 });

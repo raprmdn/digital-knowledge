@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Dashboard;
 
 use Exception;
 use App\Models\Article;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticleRequest;
 use App\Repositories\TagRepositoryInterface;
 use App\Repositories\ArticleRepositoryInterface;
 use App\Repositories\CategoryRepositoryInterface;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -26,7 +27,6 @@ class ArticleController extends Controller
 
     public function index()
     {
-        // dd(Carbon::now()->toDateTimeString());
         $id = auth()->user()->id;
         $articles = $this->articleRepository->findArticleByUser($id);
         return view('backend.articles.index', compact('articles'));
@@ -95,5 +95,12 @@ class ArticleController extends Controller
         $this->authorize('delete', $article);
         $this->articleRepository->deleteData($article);
         return redirect()->back()->with('success', 'Successfully delete article.');
+    }
+
+    public function deleteContentImage() 
+    {
+        $src = request('src');
+        $this->articleRepository->deleteImageContent($src);
+        return response()->json('success', 200);
     }
 }
