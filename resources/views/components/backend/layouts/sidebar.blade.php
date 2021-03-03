@@ -48,6 +48,12 @@
                         @endcan
                         @endforeach
                         <li class="nk-menu-item">
+                            <a href="{{ route('profile.personal.information') }}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-account-setting-fill"></em></span>
+                                <span class="nk-menu-text">Profile</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-signout"></em></span>
                                 <span class="nk-menu-text">Sign-Out</span>
