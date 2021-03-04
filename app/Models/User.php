@@ -22,6 +22,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'suspend_user',
+        'instagram',
+        'twitter',
+        'facebook',
+        'profile_picture',
+        'profile_description',
+        'email_verified_at',
     ];
 
     /**
@@ -46,6 +52,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function articles() 
     {
         return $this->hasMany(Article::class, 'article_user_id');
+    }
+
+    public function getTakeProfilePictureAttribute() 
+    {
+        return "/storage/" . $this->profile_picture;
     }
 
 }

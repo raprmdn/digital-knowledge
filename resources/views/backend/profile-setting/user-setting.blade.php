@@ -36,7 +36,22 @@
                                                 <div class="nk-block-actions flex-shrink-sm-0">
                                                     <ul class="align-center flex-wrap flex-sm-nowrap gx-3 gy-2">
                                                         <li class="order-md-last">
-                                                            <a href="#" class="btn btn-primary">Change Password</a>
+                                                            <a href="{{ route('profile.edit.password') }}" class="btn btn-primary">Change Password</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-inner">
+                                            <div class="between-center flex-wrap g-3">
+                                                <div class="nk-block-text">
+                                                    <h6>Change Email</h6>
+                                                    <p>After changed the email, make sure email is valid, and you have verify a new email for access account again.</p>
+                                                </div>
+                                                <div class="nk-block-actions flex-shrink-sm-0">
+                                                    <ul class="align-center flex-wrap flex-sm-nowrap gx-3 gy-2">
+                                                        <li class="order-md-last">
+                                                            <a href="{{ route('profile.edit.email') }}" class="btn btn-primary">Change Email</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -45,43 +60,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-aside card-aside-left user-aside toggle-slide toggle-slide-left toggle-break-lg toggle-screen-lg" data-content="userAside" data-toggle-screen="lg" data-toggle-overlay="true">
-                                <div class="card-inner-group" data-simplebar="init"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" style="height: auto; overflow: hidden;"><div class="simplebar-content" style="padding: 0px;">
-                                    <div class="card-inner">
-                                        <div class="user-card">
-                                            <div class="user-avatar bg-primary">
-                                                <span>AB</span>
-                                            </div>
-                                            <div class="user-info">
-                                                <span class="lead-text">{{ Auth::user()->name }} <span class="text-azure"><em class="icon ni ni-check-circle-fill"></em></span></span>
-                                                <span class="sub-text">{{ Auth::user()->email }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-inner">
-                                        <div class="row text-center">
-                                            <div class="col-6">
-                                                <div class="profile-stats">
-                                                    <span class="amount">-</span>
-                                                    <span class="sub-text">Total Article</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="profile-stats">
-                                                    <span class="amount">-</span>
-                                                    <span class="sub-text">Total Views</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-inner p-0">
-                                        <ul class="link-list-menu">
-                                            <li><a href="{{ route('profile.personal.information') }}"><em class="icon ni ni-user-fill-c"></em><span>Personal Infomation</span></a></li>
-                                            <li><a class="active" href="{{ route('profile.personal.settings') }}"><em class="icon ni ni-lock-alt-fill"></em><span>Security Settings</span></a></li>
-                                        </ul>
-                                    </div>
-                                </div></div></div></div><div class="simplebar-placeholder" style="width: auto; height: 443px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="height: 0px; display: none;"></div></div></div><!-- .card-inner-group -->
-                            </div>
+                            @include('backend.profile-setting.layouts.sidebar')
                         </div>
                     </div>
                 </div>
@@ -90,3 +69,8 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+    <script>
+        $('.securitySettings').addClass('active');
+    </script>
+@endpush

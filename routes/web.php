@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Dashboard\Permissions\{RoleController, PermissionController, PermissionToRoleController, 
     RoleToUserController};
-use App\Http\Controllers\Dashboard\{DashboardController, ArticleController, CategoryController, ListDataController, RecycleBinController, TagController, UserController};
+use App\Http\Controllers\Dashboard\{AccountController, DashboardController, ArticleController, CategoryController, ListDataController, RecycleBinController, TagController};
 use App\Http\Controllers\Dashboard\ManageMenu\ManageMenuController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 })->middleware(['active_user']);
+
+Route::put('/', [AccountController::class, 'updateEmail'])->name('update.email.index');
 
 Auth::routes(['verify' => true]);
 
@@ -92,12 +94,18 @@ Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 
     Route::prefix('recycle-bin')->middleware('permission:list all')->group( function() {
         Route::get('article', [RecycleBinController::class, 'articleTrash'])->name('trash.article.index');
         Route::post('article/{article:article_slug}/restore', [RecycleBinController::class, 'articleRestore'])->name('trash.article.restore');
-        // Route::get('users', [RecycleBinController::class, 'userTrash'])->name('trash.user.index');
     });
 
     Route::prefix('profile')->group( function() {
-        Route::get('/p/information', [UserController::class, 'personalInformation'])->name('profile.personal.information');
-        Route::get('/p/security-settings', [UserController::class, 'securitySettings'])->name('profile.personal.settings');
+        Route::get('', [AccountController::class, 'personalInformation'])->name('profile.personal.information');
+        Route::put('', [AccountController::class, 'updatePhotoProfile'])->name('update.photo.profile');
+        Route::get('/p/edit', [AccountController::class, 'editPersonalInformation'])->name('edit.personal.information');
+        Route::put('/p/edit', [AccountController::class, 'updatePersonalInformation'])->name('update.personal.information');
+        Route::get('/p/security', [AccountController::class, 'securitySettings'])->name('profile.personal.settings');
+        Route::get('/p/security/change-password', [AccountController::class, 'editPassword'])->name('profile.edit.password');
+        Route::put('/p/security/change-password', [AccountController::class, 'updatePassword'])->name('profile.update.password');
+        Route::get('/p/security/change-email', [AccountController::class, 'editEmail'])->name('profile.edit.email');
+        Route::put('/p/security/change-email', [AccountController::class, 'updateEmail'])->name('profile.update.email');
     });
 
 });

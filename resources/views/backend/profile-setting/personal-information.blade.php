@@ -14,7 +14,7 @@
                                         <div class="nk-block-head-content">
                                             <h4 class="nk-block-title">Personal Information</h4>
                                             <div class="nk-block-des">
-                                                <p>Basic info, like your name and email, that you use on Digital-Knowledge.</p>
+                                                <p>Basic info, like your name, email, and social media, that you use on Digital-Knowledge.</p>
                                                 <p>Joined since {{ Auth::user()->created_at->diffForHumans() }}</p>
                                             </div>
                                         </div>
@@ -23,6 +23,21 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                @if (session('success'))
+                                <div class="example-alert mb-2">
+                                    <div class="alert alert-fill alert-success alert-icon">
+                                        <em class="icon ni ni-check-circle"></em> <strong>Coool!</strong>. {{ session('success') }} </div>
+                                </div>
+                                @endif
+
+                                @if (session('error'))
+                                <div class="example-alert mb-2">
+                                    <div class="alert alert-fill alert-danger alert-icon">
+                                        <em class="icon ni ni-cross-circle"></em> <strong>Oooops</strong>! {{ session('error') }} </div>
+                                </div>
+                                @endif
+                                
                                 <div class="nk-block">
                                     <div class="nk-data data-list">
                                         <div class="data-head">
@@ -84,47 +99,11 @@
                                         </div>
                                     </div>
                                     <div class="data-col-end">
-                                        <a href="#" class="btn btn-primary">Edit Profile</a>
+                                        <a href="{{ route('edit.personal.information') }}" class="btn btn-primary">Edit Profile</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-aside card-aside-left user-aside toggle-slide toggle-slide-left toggle-break-lg toggle-screen-lg" data-content="userAside" data-toggle-screen="lg" data-toggle-overlay="true">
-                                <div class="card-inner-group" data-simplebar="init"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" style="height: auto; overflow: hidden;"><div class="simplebar-content" style="padding: 0px;">
-                                    <div class="card-inner">
-                                        <div class="user-card">
-                                            <div class="user-avatar bg-primary">
-                                                <span>AB</span>
-                                            </div>
-                                            <div class="user-info">
-                                                <span class="lead-text">{{ Auth::user()->name }} <span class="text-azure"><em class="icon ni ni-check-circle-fill"></em></span></span>
-                                                <span class="sub-text">{{ Auth::user()->email }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-inner">
-                                        <div class="row text-center">
-                                            <div class="col-6">
-                                                <div class="profile-stats">
-                                                    <span class="amount">-</span>
-                                                    <span class="sub-text">Total Article</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="profile-stats">
-                                                    <span class="amount">-</span>
-                                                    <span class="sub-text">Total Views</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-inner p-0">
-                                        <ul class="link-list-menu">
-                                            <li><a class="active" href="{{ route('profile.personal.information') }}"><em class="icon ni ni-user-fill-c"></em><span>Personal Infomation</span></a></li>
-                                            <li><a href="{{ route('profile.personal.settings') }}"><em class="icon ni ni-lock-alt-fill"></em><span>Security Settings</span></a></li>
-                                        </ul>
-                                    </div>
-                                </div></div></div></div><div class="simplebar-placeholder" style="width: auto; height: 443px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="height: 0px; display: none;"></div></div></div><!-- .card-inner-group -->
-                            </div>
+                            @include('backend.profile-setting.layouts.sidebar')
                         </div>
                     </div>
                 </div>
@@ -133,3 +112,8 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+    <script>
+        $('.personalInformation').addClass('active');
+    </script>
+@endpush

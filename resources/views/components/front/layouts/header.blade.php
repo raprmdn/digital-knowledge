@@ -121,6 +121,15 @@
                 <div class="clearfix"></div>
             </div>
         </div>
+        @if (session('success'))
+        <div class="container">
+            <div class="alert alert-success" role="alert">
+               <p class="text-center m-0">
+                   <strong>Thanks!</strong> {{ session('success') }}
+               </p>
+            </div>
+        </div>
+        @endif
         @if (session('resent'))
         <div class="container">
             <div class="alert alert-success" role="alert">
@@ -130,21 +139,59 @@
             </div>
         </div>
         @endif
-        @auth
-            @if (!Auth::user()->hasVerifiedEmail())
-                <div class="container">
-                    <div class="alert alert-warning">
-                        <p class="text-center m-0">
-                            <strong>Attention!</strong> to complete your profile information, and accessing Dashboard Menu. please check your email for a verification. <br>
-                            Did not receive any email? check spam or <a href="{{ route('verification.resend') }}" onclick="event.preventDefault(); document.getElementById('resend-verif-form').submit();">resend verification</a>.
-                        </p>
-                    </div>
+@auth
+        @if (!Auth::user()->hasVerifiedEmail())
+            <div class="container">
+                <div class="alert alert-warning">
+                    <p class="text-center m-0">
+                        <strong>Attention!</strong> to complete your profile information, and accessing Dashboard Menu. please check your email <strong>{{ Auth::user()->email }}</strong> for a verification. <br>
+                        Did not receive any email? check spam or <a href="{{ route('verification.resend') }}" onclick="event.preventDefault(); document.getElementById('resend-verif-form').submit();">resend verification</a>.
+                        If you want to change your email <button type="button" class="btn btn-radius bg-primary text-white font-small box-shadow" data-toggle="modal" data-target="#changeEmail">Click Here</button>
+                    </p>
                 </div>
-            @endif
-        @endauth
+            </div>
+        @endif
+        
     </header>
     <form class="d-inline m-0" method="POST" action="{{ route('verification.resend') }}" id="resend-verif-form">
         @csrf
     </form>
-    
+
+    <form action="{{ route('update.email.index') }}" method="post">
+        @csrf
+        @method('put')
+        <div class="modal fade" id="changeEmail" tabindex="-1" aria-labelledby="changeEmailLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="changeEmailLabel">Change Your Email</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="current_email">Current Email</label>
+                            <input type="email" class="form-control" id="current_email" name="current_email" value="{{ Auth::user()->email }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">New Email</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email">
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary text-white font-small" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary text-white font-small">Change Email</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+@endauth
+
 </div>
