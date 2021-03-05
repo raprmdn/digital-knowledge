@@ -42,10 +42,12 @@ class AccountController extends Controller
 
         request()->validate([
             'full_name' => ['required', 'min:3'],
+            'username' => ['required', 'string', 'max:25', 'alpha_num', Rule::unique('users', 'username')->ignore($user)],
         ]);
         
         $user->update([
             'name' => request('full_name'),
+            'username' => request('username'),
             'profile_description' => request('profile_description'),
             'instagram' => request('instagram'),
             'twitter' => request('twitter'),

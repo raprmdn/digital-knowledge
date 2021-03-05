@@ -74,7 +74,8 @@
                                         <thead class="bg-gray-300">
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">User name</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Username</th>
                                                 <th scope="col">User Email</th>
                                                 <th scope="col">User Role</th>
                                                 <th scope="col">Verified Email</th>
@@ -89,6 +90,7 @@
                                                 <tr>
                                                     <td>{{ $users->firstItem() + $key }}</td>
                                                     <td>{{ $user->name }}</td>
+                                                    <td>{{ $user->username }}</td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>
                                                         <span class="badge badge-pill badge-primary">{{ $user->getRoleNames()->first() }}</span>

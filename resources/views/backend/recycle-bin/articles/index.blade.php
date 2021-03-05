@@ -92,7 +92,7 @@
                                                     <td>{{ $articles->firstItem() + $key }}</td>
                                                     <td>{{ $article->article_title }}</td>
                                                     <td>{{ $article->article_slug }}</td>
-                                                    <td>{{ Str::limit($article->article_content, 50, '...') }}</td>
+                                                    <td>{!! Str::limit(strip_tags($article->article_content), $limit = 75, '...') !!}</td>
                                                     <td>
                                                         <img src="{{ $article->takeImage }}" width="250" height="150" alt="{{ $article->article_slug }}">
                                                     </td>
@@ -127,7 +127,7 @@
                                                                 @csrf
                                                                 <button type="submit" class="btn btn-sm btn-info mb-1"><em class="icon ni ni-undo"></em><span>Restore</span></button>
                                                             </form>
-                                                            <form action="" method="post">
+                                                            <form action="{{ route('trash.article.delete', $article->article_slug) }}" method="post">
                                                                 @csrf
                                                                 @method('delete')
                                                                 <button class="btn btn-sm btn-danger mb-1 delete-confirm" data-name="{{ $article->article_title }}"><em class="icon ni ni-trash"></em><span>Delete</span></button>

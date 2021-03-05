@@ -51,6 +51,12 @@
                                         </div>
                                         <div class="data-item">
                                             <div class="data-col">
+                                                <span class="data-label">Username</span>
+                                                <span class="data-value">{{ Auth::user()->username }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="data-item">
+                                            <div class="data-col">
                                                 <span class="data-label">Email Address</span>
                                                 <span class="data-value">{{ Auth::user()->email }} <em class="icon ni ni-check-circle-fill"></em></span>
                                             </div>

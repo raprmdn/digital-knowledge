@@ -61,6 +61,23 @@
                                                     <div class="row g-3 align-center">
                                                         <div class="col-lg-5">
                                                             <div class="form-group">
+                                                                <label class="form-label" for="username">Username</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-7">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" value="{{ old('username') ?? Auth::user()->username }}">
+                                                                @error('username')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row g-3 align-center">
+                                                        <div class="col-lg-5">
+                                                            <div class="form-group">
                                                                 <label class="form-label" for="profile_description">Profile Description</label>
                                                             </div>
                                                         </div>
