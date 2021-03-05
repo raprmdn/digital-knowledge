@@ -93,7 +93,8 @@ Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 
 
     Route::prefix('recycle-bin')->middleware('permission:list all')->group( function() {
         Route::get('article', [RecycleBinController::class, 'articleTrash'])->name('trash.article.index');
-        Route::post('article/{article:article_slug}/restore', [RecycleBinController::class, 'articleRestore'])->name('trash.article.restore');
+        Route::post('article/{article:article_slug}', [RecycleBinController::class, 'articleRestore'])->name('trash.article.restore');
+        Route::delete('article/{article:article_slug}', [RecycleBinController::class, 'destroy'])->name('trash.article.delete');
     });
 
     Route::prefix('profile')->group( function() {

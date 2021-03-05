@@ -47,60 +47,25 @@
                     <nav>
                         <!--Desktop menu-->
                         <ul class="main-menu d-none d-lg-inline font-small">
-                            <li class="menu-item-has-children">
-                                <a href="index.html.htm"> <i class="elegant-icon icon_house_alt mr-5"></i> Home</a>
-                                <ul class="sub-menu text-muted font-small">
-                                    <li><a href="index.html.htm">Home default</a></li>
-                                    <li><a href="home-2.html.htm">Homepage 2</a></li>
-                                    <li><a href="home-3.html.htm">Homepage 3</a></li>
-                                </ul>
+                            <li class="current-item">
+                                <a href="/"> <i class="elegant-icon icon_house_alt mr-5"></i> Home</a>
                             </li>
-                            <li> <a href="category-list.html.htm">Travel</a> </li>
-                            <li class="current-item"> <a href="category-list.html.htm">Destinations</a> </li>
-                            <li> <a href="category-grid.html.htm">Guides</a> </li>
-                            <li> <a href="category-masonry.html.htm">Food</a> </li>
-                            <li> <a href="category-big.html.htm">Hotels</a> </li>
-                            <li> <a href="category.html.htm">Review</a> </li>
-                            <li> <a href="category.html.htm">Healthy </a> </li>
-                            <li> <a href="category.html.htm">Lifestyle</a> </li>
-                            <li> <a href="category.html.htm">Blog</a> </li>
+
+                            @foreach ($categories as $category)
+                                <li>
+                                    <a href="#">{{ $category->category_name }}</a>
+                                </li>
+                            @endforeach
+                            
                         </ul>
                         <!--Mobile menu-->
                         <ul id="mobile-menu" class="d-block d-lg-none text-muted">
-                            <li class="menu-item-has-children">
-                                <a href="index.html.htm">Home</a>
-                                <ul class="sub-menu text-muted font-small">
-                                    <li><a href="index.html.htm">Home default</a></li>
-                                    <li><a href="home-2.html.htm">Homepage 2</a></li>
-                                    <li><a href="home-3.html.htm">Homepage 3</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><a href="#">Pages</a>
-                                <ul class="sub-menu font-small">
-                                    <li><a href="page-about.html.htm">About</a></li>
-                                    <li><a href="page-contact.html.htm">Contact</a></li>
-                                    <li><a href="page-typography.html.htm">Typography</a></li>
-                                    <li><a href="page-register.html.htm">Register</a></li>
-                                    <li><a href="page-login.html.htm">Login</a></li>
-                                    <li><a href="page-search.html.htm">Search</a></li>
-                                    <li><a href="page-author.html.htm">Author</a></li>
-                                    <li><a href="page-404.html.htm">404 page</a></li>
-                                </ul>
+                            <li>
+                                <a href="/">Home</a>
                             </li>
                             <li class="menu-item-has-children"><a href="#">Category</a>
                                 <ul class="sub-menu font-small">
                                     <li><a href="category-list.html.htm">List layout</a></li>
-                                    <li><a href="category-grid.html.htm">Grid layout</a></li>
-                                    <li><a href="category-masonry.html.htm">Masonry layout</a></li>
-                                    <li><a href="category-big.html.htm">Big layout</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><a href="#">Single post</a>
-                                <ul class="sub-menu font-small">
-                                    <li><a href="single.html.htm">Default</a></li>
-                                    <li><a href="single-2.html.htm">Big image</a></li>
-                                    <li><a href="single-3.html.htm">Left image</a></li>
-                                    <li><a href="single-4.html.htm">With sidebar</a></li>
                                 </ul>
                             </li>
                         </ul>
