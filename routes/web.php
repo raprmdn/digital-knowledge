@@ -4,12 +4,11 @@ use App\Http\Controllers\Dashboard\Permissions\{RoleController, PermissionContro
     RoleToUserController};
 use App\Http\Controllers\Dashboard\{AccountController, DashboardController, ArticleController, CategoryController, ListDataController, RecycleBinController, TagController};
 use App\Http\Controllers\Dashboard\ManageMenu\ManageMenuController;
+use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index');
-})->middleware(['active_user']);
+Route::get('/', [IndexController::class, 'index'])->middleware(['active_user']);
 
 Route::put('/', [AccountController::class, 'updateEmail'])->name('update.email.index');
 

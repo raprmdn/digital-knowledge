@@ -127,6 +127,11 @@ class ArticleRepository implements ArticleRepositoryInterface {
         
     }
 
+    public function getTotalArticleUser($id)
+    {
+        return $this->article->where('article_user_id', $id)->get();
+    }
+
     public function assignArticleContent($content) 
     {
         libxml_use_internal_errors(true);
