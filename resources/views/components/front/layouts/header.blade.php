@@ -65,7 +65,9 @@
                             </li>
                             <li class="menu-item-has-children"><a href="#">Category</a>
                                 <ul class="sub-menu font-small">
-                                    <li><a href="category-list.html.htm">List layout</a></li>
+                                    @foreach ($categories as $category)
+                                        <li><a href="category-list.html.htm">{{ $category->category_name }}</a></li>
+                                    @endforeach
                                 </ul>
                             </li>
                         </ul>

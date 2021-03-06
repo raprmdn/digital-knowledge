@@ -8,11 +8,9 @@
             </div>
             <div class="widget_nav_menu">
                 <ul>
-                    <li class="cat-item cat-item-2"><a href="category.html.htm">Travel tips</a> <span class="post-count">30</span></li>
-                    {{-- <li class="cat-item cat-item-3"><a href="category-grid.html.htm">Book review</a> <span class="post-count">25</span></li>
-                    <li class="cat-item cat-item-4"><a href="category-list.html.htm">Hotel review</a> <span class="post-count">16</span></li>
-                    <li class="cat-item cat-item-5"><a href="category-masonry.html.htm">Destinations </a> <span class="post-count">22</span></li>
-                    <li class="cat-item cat-item-6"><a href="category-big.html.htm">Lifestyle</a> <span class="post-count">25</span></li> --}}
+                    @foreach ($categories as $category)
+                        <li class="cat-item cat-item-2"><a href="#">{{ $category->category_name }}</a> <span class="post-count">30</span></li>
+                    @endforeach
                     @auth
                     <li class="cat-item cat-item-6"><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
                     @endauth
