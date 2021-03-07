@@ -86,7 +86,7 @@ class ArticleController extends Controller
             $this->articleRepository->updateData($article, $attribute);
             return redirect()->route('menu.article.index')->with('success', 'Successfully update the article.');
         } catch (Exception $e) {
-            return redirect()->back()->with('error', $e);
+            return redirect()->back()->with('error', 'Something went wrong.');
         }
     }
 
