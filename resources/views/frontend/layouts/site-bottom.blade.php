@@ -184,50 +184,14 @@
                 <h5 class="mt-5 mb-30">Categories</h5>
             </div>
             <div class="carausel-3-columns">
-                <div class="carausel-3-columns-item d-flex bg-grey has-border p-25 hover-up-2 transition-normal border-radius-5">
-                    <div class="post-thumb post-thumb-64 d-flex mr-15 border-radius-5 img-hover-scale overflow-hidden">
-                        <a class="color-white" href="single.html.htm">
-                            <img src="{{ asset('frontend/assets/imgs/news/thumb-1.jpg') }}" alt="">
-                        </a>
+                @foreach ($categories as $category)
+                    <div class="carausel-3-columns-item d-flex bg-grey has-border p-25 hover-up-2 transition-normal border-radius-5">
+                        <div class="post-content media-body">
+                            <h6> <a href="#">{{ $category->category_name }}</a> </h6>
+                            <p class="text-muted font-small">{{ $category->category_description }}.</p>
+                        </div>
                     </div>
-                    <div class="post-content media-body">
-                        <h6> <a href="category.html.htm">Travel Tips</a> </h6>
-                        <p class="text-muted font-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-                <div class="carausel-3-columns-item d-flex bg-grey has-border p-25 hover-up-2 transition-normal border-radius-5">
-                    <div class="post-thumb post-thumb-64 d-flex mr-15 border-radius-5 img-hover-scale overflow-hidden">
-                        <a class="color-white" href="single.html.htm">
-                            <img src="{{ asset('frontend/assets/imgs/news/thumb-2.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="post-content media-body">
-                        <h6><a href="category.html.htm">Lifestyle</a></h6>
-                        <p class="text-muted font-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-                <div class="carausel-3-columns-item d-flex bg-grey has-border p-25 hover-up-2 transition-normal border-radius-5">
-                    <div class="post-thumb post-thumb-64 d-flex mr-15 border-radius-5 img-hover-scale overflow-hidden">
-                        <a class="color-white" href="single.html.htm">
-                            <img src="{{ asset('frontend/assets/imgs/news/thumb-3.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="post-content media-body">
-                        <h6><a href="category.html.htm">Foody</a></h6>
-                        <p class="text-muted font-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-                <div class="carausel-3-columns-item d-flex bg-grey has-border p-25 hover-up-2 transition-normal border-radius-5">
-                    <div class="post-thumb post-thumb-64 d-flex mr-15 border-radius-5 img-hover-scale overflow-hidden">
-                        <a class="color-white" href="single.html.htm">
-                            <img src="{{ asset('frontend/assets/imgs/news/thumb-4.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="post-content media-body">
-                        <h6><a href="category.html.htm">Entertaiment</a></h6>
-                        <p class="text-muted font-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

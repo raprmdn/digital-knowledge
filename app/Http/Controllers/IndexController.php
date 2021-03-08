@@ -19,8 +19,10 @@ class IndexController extends Controller
     
     public function index() 
     {
+        $articles = $this->articleRepository->findAll();
         $categories = $this->categoryRepository->findAll();
-        return view('index', compact('categories'));
+        $tags = $this->tagRepository->findAll();
+        return view('index', compact('articles', 'categories', 'tags'));
     }
 
 }

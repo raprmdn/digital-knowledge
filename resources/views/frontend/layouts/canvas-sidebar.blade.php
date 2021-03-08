@@ -9,10 +9,10 @@
             <div class="widget_nav_menu">
                 <ul>
                     @foreach ($categories as $category)
-                        <li class="cat-item cat-item-2"><a href="#">{{ $category->category_name }}</a> <span class="post-count">30</span></li>
+                        <li class="cat-item cat-item-2"><a href="#">{{ $category->category_name }}</a> <span class="post-count">{{ $category->articles->count() }}</span></li>
                     @endforeach
                     @auth
-                    <li class="cat-item cat-item-6"><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                        <li class="cat-item cat-item-6"><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
                     @endauth
                 </ul>
             </div>

@@ -24,7 +24,7 @@ class ArticleRepository implements ArticleRepositoryInterface {
 
     public function findAll()
     {
-        return $this->article->latest()->get();
+        return $this->article->latest()->where('article_status', 'Publish')->paginate(15);
     }
 
     public function findById($id)
