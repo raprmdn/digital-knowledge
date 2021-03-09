@@ -17,7 +17,7 @@
             </div><!-- .nk-header-news -->
             <div class="nk-header-tools">
                 <ul class="nk-quick-nav">
-                    <li class="dropdown notification-dropdown">
+                    {{-- <li class="dropdown notification-dropdown">
                         <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-toggle="dropdown">
                             <div class="icon-status icon-status-info"><em class="icon ni ni-bell"></em></div>
                         </a>
@@ -88,7 +88,7 @@
                                 <a href="#">View All</a>
                             </div>
                         </div>
-                    </li>
+                    </li> --}}
                     <li class="dropdown user-dropdown">
                         <a href="#" class="dropdown-toggle mr-n1" data-toggle="dropdown">
                             <div class="user-toggle">
