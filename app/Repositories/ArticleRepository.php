@@ -24,7 +24,7 @@ class ArticleRepository implements ArticleRepositoryInterface {
 
     public function findAll()
     {
-        return $this->article->latest()->where('article_status', 'Publish')->paginate(15);
+        return $this->article->with('author:id,name', 'category:id,category_name,category_slug')->where('article_status', 'Publish')->latest()->paginate(15);
     }
 
     public function findById($id)
@@ -119,17 +119,17 @@ class ArticleRepository implements ArticleRepositoryInterface {
 
     public function findArticleByUser($id) 
     {
-        return $this->article->where('article_user_id', $id)->latest()->paginate(10);
+        return $this->article->where('article_user_id', $id)->with('author:id,name', 'category:id,category_name,category_slug', 'tags')->latest()->paginate(10);
     }
 
     public function findBySlug($slug) 
     {
-        
+        return $this->article->where('article_slug', $slug)->with('author', 'category', 'tags')->first();
     }
 
     public function getTotalArticleUser($id)
     {
-        return $this->article->where('article_user_id', $id)->get();
+        return $this->article->where('article_user_id', $id)->select('id')->get();
     }
 
     public function assignArticleContent($content) 

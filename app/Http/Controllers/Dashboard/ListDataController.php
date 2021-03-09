@@ -12,7 +12,7 @@ class ListDataController extends Controller
     
     public function indexDataArticles() 
     {
-        $articles = Article::latest()->paginate(10);
+        $articles = Article::with('author', 'category', 'tags')->latest()->paginate(10);
         return view('backend.list-article-and-user.articles.index', compact('articles'));
     }
 

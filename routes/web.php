@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index'])->middleware(['active_user']);
+Route::get('read/{category:category_slug}/{article:article_slug}', [IndexController::class, 'readArticle'])->name('show.article');
 
 Route::put('/', [AccountController::class, 'updateEmail'])->name('update.email.index');
 

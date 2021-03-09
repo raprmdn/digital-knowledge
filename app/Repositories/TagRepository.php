@@ -16,7 +16,7 @@ class TagRepository implements TagRepositoryInterface {
 
     public function findAll()
     {
-        return $this->tag->get();
+        return $this->tag->select('id', 'tag_name', 'tag_slug')->get();
     }
 
     public function findById($id)

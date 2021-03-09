@@ -9,6 +9,7 @@
                     <div class="textwidget">
                         <p>
                             Start writing, no matter what. The water does not flow until the faucet is turned on.
+                            <br>( This website just for my portofolio )<br>( Website still on development )
                         </p>
                         <p><strong class="color-black">Address</strong><br>
                             Jakarta,<br>
@@ -28,10 +29,8 @@
                         <h5 class="mt-5 mb-30">Quick link</h5>
                     </div>
                     <ul class="font-small">
-                        <li class="cat-item cat-item-2"><a href="#">About me</a></li>
+                        <li class="cat-item cat-item-2"><a href="#">About Digital-Knowledge</a></li>
                         <li class="cat-item cat-item-4"><a href="#">Help & Support</a></li>
-                        <li class="cat-item cat-item-5"><a href="#">​​Licensing Policy</a></li>
-                        <li class="cat-item cat-item-6"><a href="#">Refund Policy</a></li>
                         <li class="cat-item cat-item-7"><a href="#">Hire me</a></li>
                         <li class="cat-item cat-item-7"><a href="#">Contact</a></li>
                     </ul>
