@@ -24,7 +24,7 @@ class ArticleRepository implements ArticleRepositoryInterface {
 
     public function findAll()
     {
-        return $this->article->with('author:id,name', 'category:id,category_name,category_slug')->where('article_status', 'Publish')->latest()->paginate(15);
+        return $this->article->with('author:id,name,username', 'category:id,category_name,category_slug')->where('article_status', 'Publish')->latest()->paginate(15);
     }
 
     public function findById($id)
@@ -119,12 +119,27 @@ class ArticleRepository implements ArticleRepositoryInterface {
 
     public function findArticleByUser($id) 
     {
-        return $this->article->where('article_user_id', $id)->with('author:id,name', 'category:id,category_name,category_slug', 'tags')->latest()->paginate(10);
+        return $this->article->where('article_user_id', $id)->with('author:id,name,username', 'category:id,category_name,category_slug', 'tags')->latest()->paginate(10);
     }
 
     public function findBySlug($slug) 
     {
         return $this->article->where('article_slug', $slug)->with('author', 'category', 'tags')->first();
+    }
+
+    public function findByCategory($id) 
+    {
+        return $this->article->where('article_category_id', $id)->with('author:id,name,username', 'category:id,category_name,category_slug')->where('article_status', 'Publish')->latest()->paginate(10);
+    }
+
+    public function findByTags($tag) 
+    {
+        return $tag->articles()->with('author:id,name,username', 'category:id,category_name,category_slug')->where('article_status', 'Publish')->latest()->paginate(10);
+    }
+
+    public function showArticleUser($id) 
+    {
+        return $this->article->where('article_user_id', $id)->where('article_status', 'Publish')->with('author:id,name,username', 'category:id,category_name,category_slug')->latest()->paginate(15);
     }
 
     public function getTotalArticleUser($id)

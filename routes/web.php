@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index'])->middleware(['active_user']);
 Route::get('read/{category:category_slug}/{article:article_slug}', [IndexController::class, 'readArticle'])->name('show.article');
+Route::get('category/{category:category_slug}', [IndexController::class, 'showCategory'])->name('show.category');
+Route::get('tags/{tag:tag_slug}', [IndexController::class, 'showTag'])->name('show.tag');
+Route::get('profile/{user:username}', [IndexController::class, 'showProfile'])->name('show.profile');
 
 Route::put('/', [AccountController::class, 'updateEmail'])->name('update.email.index');
 

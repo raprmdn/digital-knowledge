@@ -21,13 +21,13 @@
                         </p>
                         @if ($article->article_status == "Publish")
                             <span class="mr-10"> {{ $article->created_at->format('d F Y, H:i') }}</span>
-                            <span class="has-dot">{{ $article->category->category_name }} &nbsp;</span>
+                            <span class="has-dot"><a href="{{ route('show.category', $article->category->category_slug) }}">{{ $article->category->category_name }} &nbsp;</a></span>
                             @if ($article->edited_at)
                                 <span class="has-dot"> Edited</span>
                             @endif
                         @else
                             <span class="mr-10"> {{ $article->created_at->format('d F Y, H:i') }}</span>
-                            <span class="has-dot">{{ $article->category->category_name }} &nbsp;</span>
+                            <span class="has-dot"><a href="{{ route('show.category', $article->category->category_slug) }}">{{ $article->category->category_name }} &nbsp;</a></span>
                             @if ($article->edited_at)
                                 <span class="has-dot"> Edited &nbsp;</span>
                             @endif
@@ -56,7 +56,7 @@
                 <div class="tags">
                     <span>Tags: </span>
                     @foreach ($article->tags as $tag)
-                        <a href="#" rel="tag">{{ $tag->tag_name }}</a>
+                        <a href="{{ route('show.tag', $tag->tag_slug) }}" rel="tag">{{ $tag->tag_name }}</a>
                     @endforeach
                 </div>
             </div>
@@ -116,7 +116,7 @@
                                     <div class="col-md-8 align-self-center">
                                         <div class="post-content">
                                             <div class="entry-meta meta-0 font-small mb-10">
-                                                <a href="#"><span class="text-primary">{{ $related->category->category_name }}</span></a>
+                                                <a href="{{ route('show.category', $article->category->category_slug) }}"><span class="text-primary">{{ $related->category->category_name }}</span></a>
                                             </div>
                                             <h5 class="post-title font-weight-900 mb-20">
                                                 <a href="{{ route('show.article', [$related->category->category_slug, $related->article_slug]) }}">{{ $related->article_title }}</a>
@@ -138,4 +138,6 @@
     </div>
 
 </main>
+@include('frontend.layouts.site-bottom')
+
 @endsection

@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
-use App\Models\Category;
+use App\Models\{Article, Category, Tag, User};
 use Illuminate\Http\Request;
 use App\Repositories\{ArticleRepositoryInterface, CategoryRepositoryInterface, TagRepositoryInterface};
 
@@ -35,6 +34,33 @@ class IndexController extends Controller
         $tags = $this->tagRepository->findAll();
         // return response()->json($tags);
         return view('frontend.blogs.read-article', compact('article', 'relatedArticle', 'categories', 'tags'));
+    }
+
+    public function showCategory(Category $category) 
+    {
+        $articles = $this->articleRepository->findByCategory($category->id);
+        $categories = $this->categoryRepository->findAll();
+        $tags = $this->tagRepository->findAll();
+        // return response()->json($articles);
+        return view('frontend.blogs.show-category', compact('category', 'articles', 'categories', 'tags'));
+    }
+
+    public function showTag(Tag $tag) 
+    {
+        $articles = $this->articleRepository->findByTags($tag);
+        $categories = $this->categoryRepository->findAll();
+        $tags = $this->tagRepository->findAll();
+        // return response()->json($articles);
+        return view('frontend.blogs.show-tags', compact('tag', 'articles', 'categories', 'tags'));
+    }
+
+    public function showProfile(User $user) 
+    {
+        $articles = $this->articleRepository->showArticleUser($user->id);
+        $categories = $this->categoryRepository->findAll();
+        $tags = $this->tagRepository->findAll();
+        // return response()->json($articles);
+        return view('frontend.blogs.show-profile', compact('user', 'articles', 'categories', 'tags'));
     }
 
 }

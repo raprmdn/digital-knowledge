@@ -22,7 +22,7 @@
                                 <li class="list-inline-item menu-item-has-children"><a href="#">{{ Auth::user()->name }}</a>
                                     <ul class="sub-menu font-small">
                                         <li>
-                                            <a href="#">View Profile</a>
+                                            <a href="{{ route('show.profile', Auth::user()->username) }}">View Profile</a>
                                         </li>
                                         <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                                         </li>
@@ -47,16 +47,26 @@
                     <nav>
                         <!--Desktop menu-->
                         <ul class="main-menu d-none d-lg-inline font-small">
-                            <li class="current-item">
-                                <a href="/"> <i class="elegant-icon icon_house_alt mr-5"></i> Home</a>
-                            </li>
-
-                            @foreach ($categories as $category)
-                                <li>
-                                    <a href="#">{{ $category->category_name }}</a>
+                            @if ( !Request::segment(1) )
+                                <li class="current-item">
+                                    <a href="/"> <i class="elegant-icon icon_house_alt mr-5"></i> Home</a>
                                 </li>
+                            @else
+                                <li>
+                                    <a href="/"> <i class="elegant-icon icon_house_alt mr-5"></i> Home</a>
+                                </li>
+                            @endif
+                            @foreach ($categories as $category)
+                                @if (Request::segment(2) == $category->category_slug)
+                                    <li class="current-item">
+                                        <a href="{{ route('show.category', $category) }}">{{ $category->category_name }}</a>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a href="{{ route('show.category', $category) }}">{{ $category->category_name }}</a>
+                                    </li>
+                                @endif
                             @endforeach
-                            
                         </ul>
                         <!--Mobile menu-->
                         <ul id="mobile-menu" class="d-block d-lg-none text-muted">
@@ -66,7 +76,7 @@
                             <li class="menu-item-has-children"><a href="#">Category</a>
                                 <ul class="sub-menu font-small">
                                     @foreach ($categories as $category)
-                                        <li><a href="category-list.html.htm">{{ $category->category_name }}</a></li>
+                                        <li><a href="{{ route('show.category', $category->category_slug) }}">{{ $category->category_name }}</a></li>
                                     @endforeach
                                 </ul>
                             </li>

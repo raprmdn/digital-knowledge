@@ -35,7 +35,7 @@
     {{-- <!-- End Main content --> --}}
 
     {{-- <!--site-bottom--> --}}
-    @include('frontend.layouts.site-bottom')
+    {{-- @include('frontend.layouts.site-bottom') --}}
     {{-- <!--end site-bottom--> --}}
     
     {{-- <!-- Footer Start--> --}}

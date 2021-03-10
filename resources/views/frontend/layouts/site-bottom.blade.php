@@ -41,7 +41,7 @@
                 @foreach ($categories as $category)
                     <div class="carausel-3-columns-item d-flex bg-grey has-border p-25 hover-up-2 transition-normal border-radius-5">
                         <div class="post-content media-body">
-                            <h6> <a href="#">{{ $category->category_name }}</a> </h6>
+                            <h6> <a href="{{ route('show.category', $category->category_slug) }}">{{ $category->category_name }}</a> </h6>
                             <p class="text-muted font-small">{{ $category->category_description }}.</p>
                         </div>
                     </div>
