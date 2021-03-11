@@ -27,10 +27,14 @@
                                     <ul class="nk-block-tools g-3">
                                         <li>
                                             <div class="form-control-wrap">
-                                                <div class="form-icon form-icon-right">
-                                                    <em class="icon ni ni-search"></em>
-                                                </div>
-                                                <input type="text" class="form-control" id="default-04" placeholder="Search by title">
+                                                <form action="{{ route('search.trash.article') }}" method="get" autocomplete="off">
+                                                    <div class="form-icon form-icon-right">
+                                                        <button type="submit" class="btn btn-sm">
+                                                            <em class="icon ni ni-search"></em>
+                                                        </button>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="query" id="default-04" placeholder="Search by title">
+                                                </form>
                                             </div>
                                         </li>
                                         <li>
@@ -139,7 +143,11 @@
                                             @empty
                                                 <tr>
                                                     <td colspan="11">
-                                                        <h5 class="text-center">Ops, There's no article here!</h5>
+                                                        @if (request('query'))
+                                                            <h5 class="text-center">Search result with keyword " {{ request('query') }} " was not found</h5>
+                                                        @else
+                                                            <h5 class="text-center">Ops, There's no article here!</h5>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforelse
@@ -151,7 +159,7 @@
                         <div class="card">
                             <div class="card-inner">
                                 <div class="d-flex justify-content-center">
-                                    {{ $articles->links('pagination::bootstrap-4') }}
+                                    {{ $articles->withQueryString()->links('pagination::bootstrap-4') }}
                                 </div>
                             </div>
                         </div>

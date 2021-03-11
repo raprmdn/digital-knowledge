@@ -21,7 +21,7 @@
                                                 <h6 class="post-title mb-15 text-limit-2-row font-medium"><a href="{{ route('show.article', [$category->category_slug, $article->article_slug]) }}">{{ $article->article_title }}</a></h6>
                                                 <div class="entry-meta meta-1 float-left font-x-small text-uppercase">
                                                     <span class="post-on">{{ $article->created_at->diffForHumans() }}</span>
-                                                    <span class="has-dot"> <a href="#">{{ $article->author->name }}</a></span>
+                                                    <span class="has-dot"> <a href="{{ route('show.profile', $article->author->username) }}">{{ $article->author->name }}</a></span>
                                                 </div>
                                             </div>
                                         </div>

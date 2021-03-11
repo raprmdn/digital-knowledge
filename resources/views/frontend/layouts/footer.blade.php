@@ -43,7 +43,7 @@
                     </div>
                     <div class="tagcloud mt-50">
                         @foreach ($tags->shuffle()->take(10) as $tag)
-                            <a class="tag-cloud-link" href="#">{{ $tag->tag_name }}</a>
+                            <a class="tag-cloud-link" href="{{ route('show.tag', $tag->tag_slug) }}">{{ $tag->tag_name }}</a>
                         @endforeach
                     </div>
                 </div>

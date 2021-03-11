@@ -17,7 +17,11 @@
                         <div class="nk-block-head-content">
                             <h3 class="nk-block-title page-title">List All Article</h3>
                             <div class="nk-block-des text-soft">
-                                <p>Total articles in this website : {{ $articles->total() }} articles</p>
+                                @if (request('query'))
+                                    <p>Search results {{ $articles->total() }} articles</p>
+                                @else
+                                    <p>Total articles in this website : {{ $articles->total() }} articles</p>
+                                @endif
                             </div>
                         </div>
                         <div class="nk-block-head-content">
@@ -27,10 +31,14 @@
                                     <ul class="nk-block-tools g-3">
                                         <li>
                                             <div class="form-control-wrap">
-                                                <div class="form-icon form-icon-right">
-                                                    <em class="icon ni ni-search"></em>
-                                                </div>
-                                                <input type="text" class="form-control" id="default-04" placeholder="Search by title">
+                                                <form action="{{ route('search.article.list') }}" method="get" autocomplete="off">
+                                                    <div class="form-icon form-icon-right">
+                                                        <button type="submit" class="btn btn-sm">
+                                                            <em class="icon ni ni-search"></em>
+                                                        </button>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="query" id="default-04" placeholder="Search by title">
+                                                </form>
                                             </div>
                                         </li>
                                         <li>
@@ -127,7 +135,7 @@
                                                     <td>{{ $article->created_at->format('d F Y, H:i') }}</td>
                                                     <td>
                                                         <div class="d-block">
-                                                            <a href="#" class="btn btn-sm btn-info mb-1"><em class="icon ni ni-eye"></em></a>
+                                                            <a href="{{ route('show.article', [$article->category->category_slug, $article->article_slug]) }}" target="_blank" class="btn btn-sm btn-info mb-1"><em class="icon ni ni-eye"></em></a>
                                                             <a href="{{ route('menu.article.edit', $article->article_slug) }}" class="btn btn-sm btn-primary mb-1"><em class="icon ni ni-edit"></em></a>
                                                             <form action="{{ route('menu.article.delete', $article->article_slug) }}" method="post">
                                                                 @csrf
@@ -141,7 +149,11 @@
                                             @empty
                                                 <tr>
                                                     <td colspan="11">
-                                                        <h5 class="text-center">Ops, There's no article here!</h5>
+                                                        @if (request('query'))
+                                                            <h5 class="text-center">Search result with keyword " {{ request('query') }} " was not found</h5>
+                                                        @else
+                                                            <h5 class="text-center">Ops, There's no article here!</h5>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforelse
@@ -153,7 +165,7 @@
                         <div class="card">
                             <div class="card-inner">
                                 <div class="d-flex justify-content-center">
-                                    {{ $articles->links('pagination::bootstrap-4') }}
+                                    {{ $articles->withQueryString()->links('pagination::bootstrap-4') }}
                                 </div>
                             </div>
                         </div>

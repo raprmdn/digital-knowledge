@@ -72,7 +72,7 @@
                                                     <td>{{ $category->created_at }}</td>
                                                     <td>
                                                         <div class="row">
-                                                            <a href="#" class="btn btn-sm btn-success mr-1"><em class="icon ni ni-eye"></em></a>
+                                                            <a href="{{ route('show.category', $category->category_slug) }}" target="_blank" class="btn btn-sm btn-success mr-1"><em class="icon ni ni-eye"></em></a>
                                                             <a href="{{ route('menu.category.edit', $category->category_slug) }}" class="btn btn-sm btn-primary mr-1"><em class="icon ni ni-edit"></em></a>
                                                             <form action="{{ route('menu.category.delete', $category->category_slug) }}" method="post">
                                                                 @csrf

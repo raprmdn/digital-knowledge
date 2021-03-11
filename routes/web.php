@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Dashboard\Permissions\{RoleController, PermissionController, PermissionToRoleController, 
+use App\Http\Controllers\Dashboard\Permissions\{RoleController, PermissionController, PermissionToRoleController,
     RoleToUserController};
 use App\Http\Controllers\Dashboard\{AccountController, DashboardController, ArticleController, CategoryController, ListDataController, RecycleBinController, TagController};
 use App\Http\Controllers\Dashboard\ManageMenu\ManageMenuController;
-use App\Http\Controllers\IndexController;
+use App\Http\Controllers\{IndexController, SearchController};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +13,7 @@ Route::get('read/{category:category_slug}/{article:article_slug}', [IndexControl
 Route::get('category/{category:category_slug}', [IndexController::class, 'showCategory'])->name('show.category');
 Route::get('tags/{tag:tag_slug}', [IndexController::class, 'showTag'])->name('show.tag');
 Route::get('profile/{user:username}', [IndexController::class, 'showProfile'])->name('show.profile');
-
+Route::get('/article', [SearchController::class, 'search'])->name('search.article');
 Route::put('/', [AccountController::class, 'updateEmail'])->name('update.email.index');
 
 Auth::routes(['verify' => true]);
@@ -29,6 +29,7 @@ Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 
         Route::put('{article:article_slug}/edit', [ArticleController::class, 'update']);
         Route::delete('{article:article_slug}/edit', [ArticleController::class, 'destroy'])->name('menu.article.delete');
         Route::post('/image-content/delete', [ArticleController::class, 'deleteContentImage'])->name('menu.delete.content.image');
+        Route::get('list-article/search', [SearchController::class, 'searchArticleByUser'])->name('search.article.user');
     });
 
     Route::prefix('categories')->middleware('permission:create category')->group( function() {
@@ -72,7 +73,7 @@ Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 
         Route::post('assign/role-user/create', [RoleToUserController::class, 'store']);
         Route::get('assign/role-user/{user}/sync', [RoleToUserController::class, 'edit'])->name('menu.role.user.sync')->middleware('permission:role to user');
         Route::put('assign/role-user/{user}/sync', [RoleToUserController::class, 'sync']);
-        
+
     });
 
     Route::prefix('menu-management')->namespace('ManageMenu')->middleware('permission:menu management')->group( function() {
@@ -92,12 +93,15 @@ Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 
         Route::put('user/detail', [ListDataController::class, 'userDetail'])->name('data.user.detail');
         Route::put('user/suspend', [ListDataController::class, 'suspend'])->name('data.user.suspend');
         Route::put('{user}/recovery', [ListDataController::class, 'recovery'])->name('data.user.recovery');
+        Route::get('article-list/search', [SearchController::class, 'searchArticle'])->name('search.article.list');
+        Route::get('user-list/search', [SearchController::class, 'searchUser'])->name('search.user.list');
     });
 
     Route::prefix('recycle-bin')->middleware('permission:list all')->group( function() {
         Route::get('article', [RecycleBinController::class, 'articleTrash'])->name('trash.article.index');
         Route::post('article/{article:article_slug}', [RecycleBinController::class, 'articleRestore'])->name('trash.article.restore');
         Route::delete('article/{article:article_slug}', [RecycleBinController::class, 'destroy'])->name('trash.article.delete');
+        Route::get('article/search', [SearchController::class, 'searchTrashedArticle'])->name('search.trash.article');
     });
 
     Route::prefix('profile')->group( function() {

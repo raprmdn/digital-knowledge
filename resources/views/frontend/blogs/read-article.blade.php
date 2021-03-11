@@ -13,11 +13,11 @@
                     <div class="entry-meta align-items-center meta-2 font-small color-muted">
                         <p class="mb-5">
                             @if ($article->author->profile_picture)
-                                <a class="author-avatar" href="#"><img class="img-circle" src="{{ $article->author->takeProfilePicture }}" alt=""></a>
+                                <a class="author-avatar" href="{{ route('show.profile', $article->author->username) }}"><img class="img-circle" src="{{ $article->author->takeProfilePicture }}" alt=""></a>
                             @else
-                                <a class="author-avatar" href="#"><img class="img-circle" src="{{ asset('frontend/assets/imgs/authors/default-photo-profile-icon.png') }}" alt=""></a>
+                                <a class="author-avatar" href="{{ route('show.profile', $article->author->username) }}"><img class="img-circle" src="{{ asset('frontend/assets/imgs/authors/default-photo-profile-icon.png') }}" alt=""></a>
                             @endif
-                            By <a href="#"><span class="author-name font-weight-bold">{{ $article->author->name }}</span></a>
+                            By <a href="{{ route('show.profile', $article->author->username) }}"><span class="author-name font-weight-bold">{{ $article->author->name }}</span></a>
                         </p>
                         @if ($article->article_status == "Publish")
                             <span class="mr-10"> {{ $article->created_at->format('d F Y, H:i') }}</span>
@@ -77,17 +77,17 @@
             <div class="author-bio p-30 mt-50 border-radius-10 bg-white wow fadeIn  animated" style="visibility: visible; animation-name: fadeIn;">
                 <div class="author-image mb-30">
                     @if ($article->author->profile_picture)
-                        <a class="author-avatar" href="#"><img class="img-circle" src="{{ $article->author->takeProfilePicture }}" alt=""></a>
+                        <a class="author-avatar" href="{{ route('show.profile', $article->author->username) }}"><img class="img-circle" src="{{ $article->author->takeProfilePicture }}" alt=""></a>
                     @else
-                        <a class="author-avatar" href="#"><img class="img-circle" src="{{ asset('frontend/assets/imgs/authors/default-photo-profile-icon.png') }}" alt=""></a>
+                        <a class="author-avatar" href="{{ route('show.profile', $article->author->username) }}"><img class="img-circle" src="{{ asset('frontend/assets/imgs/authors/default-photo-profile-icon.png') }}" alt=""></a>
                     @endif
                 </div>
                 <div class="author-info">
-                    <h4 class="font-weight-bold mb-20"><span class="vcard author"><span class="fn"><a href="#" title="Posted by{{ $article->author->name }}" rel="author">{{ $article->author->name }}</a></span></span>
+                    <h4 class="font-weight-bold mb-20"><span class="vcard author"><span class="fn"><a href="{{ route('show.profile', $article->author->username) }}" title="Posted by{{ $article->author->name }}" rel="author">{{ $article->author->name }}</a></span></span>
                     </h4>
                     <h5 class="text-muted">About author</h5>
                     <div class="author-description text-muted">{{ $article->author->profile_description }}</div>
-                    <a href="#" class="author-bio-link mb-md-0 mb-3">View All Article</a>
+                    <a href="{{ route('show.profile', $article->author->username) }}" class="author-bio-link mb-md-0 mb-3">View All Article</a>
                 </div>
             </div>
             <!--related posts-->
@@ -124,7 +124,7 @@
                                             </h5>
                                             <div class="entry-meta meta-1 float-left font-x-small text-uppercase">
                                                 <span class="post-on">{{ $related->created_at->diffForHumans() }}</span>
-                                                <span class="has-dot"> <a href="#">{{ $related->author->name }}</a></span>
+                                                <span class="has-dot"> <a href="{{ route('show.profile', $article->author->username) }}">{{ $related->author->name }}</a></span>
                                             </div>
                                         </div>
                                     </div>

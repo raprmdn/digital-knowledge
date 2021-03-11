@@ -9,7 +9,12 @@
                 <!--author box-->
                 <div class="author-bio mb-50 bg-white p-30 border-radius-10">
                     <div class="author-image mb-30">
-                        <a href="{{ route('show.profile', $user->username) }}"><img src="{{ $user->takeProfilePicture }}" alt="" class="avatar"></a>
+                        {{-- <a href="{{ route('show.profile', $user->username) }}"><img src="{{ $user->takeProfilePicture }}" alt="" class="avatar"></a> --}}
+                        @if ($user->profile_picture)
+                            <a class="author-avatar" href="{{ route('show.profile', $user->username) }}"><img class="avatar" src="{{ $user->takeProfilePicture }}" alt=""></a>
+                        @else
+                            <a class="author-avatar" href="{{ route('show.profile', $user->username) }}"><img class="avatar" src="{{ asset('frontend/assets/imgs/authors/default-photo-profile-icon.png') }}" alt=""></a>
+                        @endif
                     </div>
                     <div class="author-info">
                         <h3 class="font-weight-900"><span class="vcard author"><span class="fn"><a href="{{ route('show.profile', $user->username) }}" rel="author">{{ $user->name }}</a></span></span>
@@ -18,9 +23,9 @@
                         <div class="author-description text-muted">{{ $user->profile_description }}</div>
                         <strong class="text-muted">Follow: </strong>
                         <ul class="header-social-network d-inline-block list-inline color-white mb-20">
-                            <li class="list-inline-item"><a class="social-icon fb text-xs-center" target="_blank" href="#"><i class="elegant-icon social_facebook"></i></a></li>
-                            <li class="list-inline-item"><a class="social-icon tw text-xs-center" target="_blank" href="#"><i class="elegant-icon social_twitter "></i></a></li>
-                            <li class="list-inline-item"><a class="social-icon text-xs-center" style="background: #C13584;" target="_blank" href="#"><i class="elegant-icon social_instagram"></i></a></li>
+                            <li class="list-inline-item"><a class="social-icon fb text-xs-center" target="_blank" href="https://www.facebook.com/{{ $user->facebook }}"><i class="elegant-icon social_facebook"></i></a></li>
+                            <li class="list-inline-item"><a class="social-icon tw text-xs-center" target="_blank" href="https://twitter.com/{{ $user->twitter }}"><i class="elegant-icon social_twitter "></i></a></li>
+                            <li class="list-inline-item"><a class="social-icon text-xs-center" style="background: #C13584;" target="_blank" href="https://www.instagram.com/{{ $user->instagram }}"><i class="elegant-icon social_instagram"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -59,7 +64,7 @@
                                                 </div>
                                                 <div class="entry-meta meta-1 float-left font-x-small text-uppercase">
                                                     <span class="post-on">{{ $article->created_at->diffForHumans() }}</span>
-                                                    <span class="has-dot"> <a href="#">{{ $article->author->name }}</a></span>
+                                                    <span class="has-dot"> <a href="{{ route('show.profile', $article->author->username) }}">{{ $article->author->name }}</a></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -101,7 +106,7 @@
                                             </h5>
                                             <div class="entry-meta meta-1 float-left font-x-small text-uppercase">
                                                 <span class="post-on">{{ $article->created_at->diffForHumans() }}</span>
-                                                <span class="has-dot"> <a href="#">{{ $article->author->name }}</a></span>
+                                                <span class="has-dot"> <a href="{{ route('show.profile', $article->author->username) }}">{{ $article->author->name }}</a></span>
                                             </div>
                                         </div>
                                     </div>

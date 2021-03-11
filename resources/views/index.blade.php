@@ -35,7 +35,7 @@
                     @endforeach
                 </div>
             </div>
-        </div>      
+        </div>
 
         <div class="container">
             <div class="hot-tags pt-30 pb-30 font-small align-self-center">
@@ -67,7 +67,7 @@
                                                 </h3>
                                                 <div class="entry-meta meta-1 font-small text-white mt-10 pr-5 pl-5">
                                                     <span class="post-on">{{ $article->created_at->diffForHumans() }}</span>
-                                                    <span class="has-dot"> <a href="#" class="text-white">{{ $article->author->name }}</a></span>
+                                                    <span class="has-dot"> <a href="{{ route('show.profile', $article->author->username) }}" class="text-white">{{ $article->author->name }}</a></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -98,7 +98,7 @@
                                         </h5>
                                         <div class="entry-meta meta-1 float-left font-x-small text-uppercase">
                                             <span class="post-on">{{ $article->created_at->diffForHumans() }}</span>
-                                            <span class="has-dot"> <a href="#">{{ $article->author->name }}</a></span>
+                                            <span class="has-dot"> <a href="{{ route('show.profile', $article->author->username) }}">{{ $article->author->name }}</a></span>
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +145,7 @@
                                                             </div>
                                                             <div class="entry-meta meta-1 float-left font-x-small text-uppercase">
                                                                 <span class="post-on">{{ $article->created_at->diffForHumans() }}</span>
-                                                                <span class="has-dot"> <a href="#">{{ $article->author->name }}</a></span>
+                                                                <span class="has-dot"> <a href="{{ route('show.profile', $article->author->username) }}">{{ $article->author->name }}</a></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -188,7 +188,7 @@
                                                     </h5>
                                                     <div class="entry-meta meta-1 float-left font-x-small text-uppercase">
                                                         <span class="post-on">{{ $article->created_at->diffForHumans() }}</span>
-                                                        <span class="has-dot"> <a href="#">{{ $article->author->name }}</a></span>
+                                                        <span class="has-dot"> <a href="{{ route('show.profile', $article->author->username) }}">{{ $article->author->name }}</a></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -252,7 +252,7 @@
                                                     </h5>
                                                     <div class="entry-meta meta-1 float-left font-x-small text-uppercase">
                                                         <span class="post-on">{{ $article->created_at->diffForHumans() }}</span>
-                                                        <span class="has-dot"> <a href="#">{{ $article->author->name }}</a></span>
+                                                        <span class="has-dot"> <a href="{{ route('show.profile', $article->author->username) }}">{{ $article->author->name }}</a></span>
                                                     </div>
                                                 </div>
                                             </div>

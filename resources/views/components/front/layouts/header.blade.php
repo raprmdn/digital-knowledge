@@ -12,14 +12,14 @@
                         </a>
                     </div>
                     <div class="col-md-9 col-xs-6 text-right header-top-right ">
-                        <button class="search-icon d-none d-md-inline"><span class="mr-15 text-muted font-small"><i class="elegant-icon icon_search mr-5"></i>Search</span></button>
+                        <button class="search-icon"><span class="mr-15 text-muted font-small"><i class="elegant-icon icon_search mr-5"></i>Search</span></button>
                         <span class="vertical-divider mr-20 ml-20 d-none d-md-inline"></span>
                         @guest
                             <a href="{{ route('login') }}" class="btn btn-radius bg-primary text-white ml-15 font-small box-shadow">Login</a>
                             <a href="{{ route('register') }}" class="btn btn-radius bg-primary text-white ml-15 font-small box-shadow">Register</a>
                         @else
                             <ul class="list-inline nav-topbar d-none d-md-inline">
-                                <li class="list-inline-item menu-item-has-children"><a href="#">{{ Auth::user()->name }}</a>
+                                <li class="list-inline-item menu-item-has-children"><a href="{{ route('show.profile', Auth::user()->username) }}">{{ Auth::user()->name }}</a>
                                     <ul class="sub-menu font-small">
                                         <li>
                                             <a href="{{ route('show.profile', Auth::user()->username) }}">View Profile</a>
@@ -80,6 +80,9 @@
                                     @endforeach
                                 </ul>
                             </li>
+                            <li>
+                                <a href="{{ route('show.profile', Auth::user()->username) }}">View Profile</a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -128,7 +131,7 @@
                 </div>
             </div>
         @endif
-        
+
     </header>
     <form class="d-inline m-0" method="POST" action="{{ route('verification.resend') }}" id="resend-verif-form">
         @csrf

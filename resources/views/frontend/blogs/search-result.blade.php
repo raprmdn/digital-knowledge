@@ -4,12 +4,13 @@
 
 <main>
 
+    @if( $articles->total() > 0 )
+
     <div class="archive-header pt-50">
         <div class="container">
-            <h2 class="font-weight-900">{{ $category->category_name }}</h2>
-            <div class="breadcrumb">
-                <a href="/" rel="nofollow">Home</a>
-                <span></span> {{ $category->category_name }}
+            <h2 class="font-weight-900">Search results</h2>
+            <div>
+                We found {{ $articles->total() }} articles for keyword " <strong>{{ request('search_query') }}</strong> ".
             </div>
             <div class="bt-1 border-color-1 mt-30 mb-50"></div>
         </div>
@@ -60,7 +61,7 @@
                     <div class="pagination-area mb-30 wow fadeInUp animated">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-start">
-                                {{ $articles->links('pagination::bootstrap-4') }}
+                                {{ $articles->withQueryString()->links('pagination::bootstrap-4') }}
                             </ul>
                         </nav>
                     </div>
@@ -69,6 +70,24 @@
             </div>
         </div>
     </div>
+
+    @else
+
+        <div class="container pb-50">
+            <div class="row pt-80">
+                <div class="col-lg-6 col-md-12 d-lg-block d-none pr-50"><img src="{{ asset('frontend/assets/imgs/theme/page-not-found.png') }}" alt=""></div>
+                <div class="col-lg-6 col-md-12 pl-50 text-md-center text-lg-left">
+                    <h1 class="mb-30 font-weight-900 page-404">404</h1>
+                    <p class="">Sorry, What you looking for ? <br> We cannot found Article with keyword " <strong>{{ request('search_query') }}</strong> ".
+                    </p>
+                    <div class="form-group">
+                        <a class="text-white button button-contactForm mt-30" href="/">Home page</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    @endif
 
 </main>
 

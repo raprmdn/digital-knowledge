@@ -70,7 +70,7 @@
                                                     <td>{{ $tag->created_at }}</td>
                                                     <td>
                                                         <div class="row">
-                                                            <a href="#" class="btn btn-sm btn-success mr-1"><em class="icon ni ni-eye"></em></a>
+                                                            <a href="{{ route('show.tag', $tag->tag_slug) }}" target="_blank" class="btn btn-sm btn-success mr-1"><em class="icon ni ni-eye"></em></a>
                                                             <a href="{{ route('menu.tag.edit', $tag->tag_slug) }}" class="btn btn-sm btn-primary mr-1"><em class="icon ni ni-edit"></em></a>
                                                             <form action="{{ route('menu.tag.delete', $tag->tag_slug) }}" method="post">
                                                                 @csrf

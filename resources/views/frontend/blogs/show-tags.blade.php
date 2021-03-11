@@ -49,7 +49,7 @@
                                                 </h5>
                                                 <div class="entry-meta meta-1 float-left font-x-small text-uppercase">
                                                     <span class="post-on">{{ $article->created_at->diffForHumans() }}</span>
-                                                    <span class="has-dot"> <a href="#">{{ $article->author->name }}</a></span>
+                                                    <span class="has-dot"> <a href="{{ route('show.profile', $article->author->username) }}">{{ $article->author->name }}</a></span>
                                                 </div>
                                             </div>
                                         </div>

@@ -18,7 +18,7 @@ class CategoryRepository implements CategoryRepositoryInterface {
     public function findAll()
     {
         return $this->category->with(['articles' => function($q) {
-            $q->where('article_status', 'Publish')->latest()->with('author:id,name', 'category:id,category_name');
+            $q->where('article_status', 'Publish')->latest()->with('author:id,name,username', 'category:id,category_name');
         }])->get();
     }
 

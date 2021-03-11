@@ -17,7 +17,11 @@
                         <div class="nk-block-head-content">
                             <h3 class="nk-block-title page-title">List All Users</h3>
                             <div class="nk-block-des text-soft">
-                                <p>Total Registered user : {{ $users->total() }}</p>
+                                @if (request('query'))
+                                    <p>Search results {{ $users->total() }} users</p>
+                                @else
+                                    <p>Total Registered user : {{ $users->total() }}</p>
+                                @endif
                             </div>
                         </div>
                         <div class="nk-block-head-content">
@@ -27,14 +31,18 @@
                                     <ul class="nk-block-tools g-3">
                                         <li>
                                             <div class="form-control-wrap">
-                                                <div class="form-icon form-icon-right">
-                                                    <em class="icon ni ni-search"></em>
-                                                </div>
-                                                <input type="text" class="form-control" id="default-04" placeholder="Search by name">
+                                                <form action="{{ route('search.user.list') }}" method="get" autocomplete="off">
+                                                    <div class="form-icon form-icon-right">
+                                                        <button type="submit" class="btn btn-sm">
+                                                            <em class="icon ni ni-search"></em>
+                                                        </button>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="query" id="default-04" placeholder="Search by username">
+                                                </form>
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-toggle="dropdown"><em class="d-none d-sm-inline icon ni ni-calender-date"></em><span><span class="d-none d-md-inline">Last</span> 30 Days</span><em class="dd-indc icon ni ni-chevron-right"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <ul class="link-list-opt no-bdr">
@@ -90,7 +98,9 @@
                                                 <tr>
                                                     <td>{{ $users->firstItem() + $key }}</td>
                                                     <td>{{ $user->name }}</td>
-                                                    <td>{{ $user->username }}</td>
+                                                    <td>
+                                                        <a href="{{ route('show.profile', $user->username) }}" target="_blank">{{ $user->username }}</a>
+                                                    </td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>
                                                         <span class="badge badge-pill badge-primary">{{ $user->getRoleNames()->first() }}</span>
@@ -129,7 +139,7 @@
                                                                 <form action="{{ route('data.user.recovery', $user) }}" method="post">
                                                                     @csrf
                                                                     @method('put')
-                                                                    <button class="btn btn-sm btn-success mr-1"><em class="icon ni ni-undo"></em></em>&nbsp;Recover User</button>
+                                                                    <button class="btn btn-sm btn-success mr-1"><em class="icon ni ni-undo"></em>&nbsp;Recover User</button>
                                                                 </form>
                                                             @else
                                                                 <button type="button" class="btn btn-sm btn-danger mr-1 suspendButton" data-toggle="modal" data-target="#modal" data-id="{{ $user->id }}"><em class="icon ni ni-na"></em>&nbsp;Suspend User</button>
@@ -140,7 +150,11 @@
                                             @empty
                                                 <tr>
                                                     <td colspan="11">
-                                                        <h5 class="text-center">Ops, There's no user here!</h5>
+                                                        @if (request('query'))
+                                                            <h5 class="text-center">Search result with keyword " {{ request('query') }} " was not found</h5>
+                                                        @else
+                                                            <h5 class="text-center">Ops, There's no users here!</h5>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforelse
@@ -152,7 +166,7 @@
                         <div class="card">
                             <div class="card-inner">
                                 <div class="d-flex justify-content-center">
-                                    {{ $users->links('pagination::bootstrap-4') }}
+                                    {{ $users->withQueryString()->links('pagination::bootstrap-4') }}
                                 </div>
                             </div>
                         </div>
@@ -202,7 +216,7 @@
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script>
-        
+
         $('.suspendButton').on('click', function (e) {
             const id = $(this).data('id');
             $('.modal-body form').attr('action', "{{ route('data.user.suspend') }}");
