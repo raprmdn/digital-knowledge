@@ -81,7 +81,9 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="{{ route('show.profile', Auth::user()->username) }}">View Profile</a>
+                                @auth
+                                    <a href="{{ route('show.profile', Auth::user()->username) }}">View Profile</a>
+                                @endauth
                             </li>
                         </ul>
                     </nav>
