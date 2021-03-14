@@ -18,7 +18,7 @@ class ArticleController extends Controller
 
     protected $articleRepository, $categoryRepository, $tagRepository;
 
-    public function __construct(ArticleRepositoryInterface $articleRepository, CategoryRepositoryInterface $categoryRepository, TagRepositoryInterface $tagRepository) 
+    public function __construct(ArticleRepositoryInterface $articleRepository, CategoryRepositoryInterface $categoryRepository, TagRepositoryInterface $tagRepository)
     {
         $this->articleRepository = $articleRepository;
         $this->categoryRepository = $categoryRepository;
@@ -68,7 +68,7 @@ class ArticleController extends Controller
     {
         request()->validate([
             'article_title' => ['required', 'min:10'],
-            'article_content' => ['required', 'min:1'],
+            'article_content' => ['required', 'min:250'],
             'article_thumbnail' => ['mimes:jpeg,jpg,png', 'max:5000'],
             'article_category' => ['required'],
             'article_tag' => ['required', 'max:5'],
@@ -76,7 +76,7 @@ class ArticleController extends Controller
 
         try {
             $attribute = request()->all();
-            
+
             if ( request()->file('article_thumbnail') ) {
                 $attribute['article_thumbnail'] = request('article_thumbnail');
             } else {
@@ -97,7 +97,7 @@ class ArticleController extends Controller
         return redirect()->back()->with('success', 'Successfully delete article.');
     }
 
-    public function deleteContentImage() 
+    public function deleteContentImage()
     {
         $src = request('src');
         $this->articleRepository->deleteImageContent($src);
