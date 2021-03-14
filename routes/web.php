@@ -17,8 +17,9 @@ Route::get('/article', [SearchController::class, 'search'])->name('search.articl
 Route::put('/', [AccountController::class, 'updateEmail'])->name('update.email.index');
 
 Auth::routes(['verify' => true]);
+Route::get('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
-Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware('has.role', 'verified', 'active_user')->group( function() {
+Route::prefix('menu/dashboard')->namespace('Dashboard')->middleware(['has.role', 'verified', 'active_user'])->group( function() {
     Route::get('panel', [DashboardController::class, 'index'])->name('menu.dashboard');
 
     Route::prefix('articles')->middleware('permission:create article')->group( function() {
