@@ -31,8 +31,8 @@
                     <ul class="font-small">
                         <li class="cat-item cat-item-2"><a href="#">About Digital-Knowledge</a></li>
                         <li class="cat-item cat-item-4"><a href="#">Help & Support</a></li>
-                        <li class="cat-item cat-item-7"><a href="#">Hire me</a></li>
-                        <li class="cat-item cat-item-7"><a href="#">Contact</a></li>
+                        <li class="cat-item cat-item-7"><a href="mailto:cs.digital.knowledge@gmail.com">Hire me</a></li>
+                        <li class="cat-item cat-item-7"><a href="mailto:cs.digital.knowledge@gmail.com">Contact</a></li>
                     </ul>
                 </div>
             </div>
