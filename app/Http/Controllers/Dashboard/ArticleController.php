@@ -71,7 +71,7 @@ class ArticleController extends Controller
             'article_content' => ['required', 'min:250'],
             'article_thumbnail' => ['mimes:jpeg,jpg,png', 'max:5000'],
             'article_category' => ['required'],
-            'article_tag' => ['required', 'max:5'],
+            'article_tag' => ['required', 'max:5', 'array'],
         ]);
 
         try {
