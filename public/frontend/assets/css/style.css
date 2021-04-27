@@ -55,7 +55,7 @@ button.bg-primary:hover{background-color:var(--color-danger)!important;}
 .border-radius-10{border-radius:10px;}
 
 /* GENERAL */
-body{font-family:'Noto Sans JP',sans-serif;font-weight:normal;font-style:normal;font-size:14px;}
+body{font-family:'Inter var',sans-serif;font-weight:normal;font-style:normal;font-size:14px;}
 h1,
 h2,
 h3,
@@ -64,7 +64,7 @@ h5,
 h6,
 .font-heading,
 .btn,
-.post-title{font-style:normal;font-weight:500;text-transform:none;font-family:'Noto Sans JP',sans-serif;}
+.post-title{font-style:normal;font-weight:500;text-transform:none;font-family:'Inter var',sans-serif;}
 p{margin-bottom:1.2em;font-weight:400}
 .img{max-width:100%;-webkit-transition:all .2s ease-out 0s;-moz-transition:all .2s ease-out 0s;-ms-transition:all .2s ease-out 0s;-o-transition:all .2s ease-out 0s;transition:all .2s ease-out 0s}
 .img-circle{border-radius:50%;}
