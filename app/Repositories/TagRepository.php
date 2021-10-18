@@ -9,14 +9,14 @@ class TagRepository implements TagRepositoryInterface {
 
     protected $tag;
 
-    public function __construct(Tag $tag) 
+    public function __construct(Tag $tag)
     {
         $this->tag = $tag;
     }
 
     public function findAll()
     {
-        return $this->tag->select('id', 'tag_name', 'tag_slug')->get();
+        return $this->tag->get(['id', 'tag_name', 'tag_slug']);
     }
 
     public function findById($id)
@@ -24,37 +24,32 @@ class TagRepository implements TagRepositoryInterface {
 
     }
 
-    public function saveData($attribute)
+    public function saveData($attribute): Tag
     {
         $attribute['tag_slug'] = Str::slug($attribute['tag_name']);
-        
-        $result = $this->tag->create([
+
+        return $this->tag->create([
             'tag_name' => $attribute['tag_name'],
             'tag_slug' => $attribute['tag_slug'],
         ]);
-
-        return $result;
     }
 
     public function updateData($tag, $attribute)
     {
         $attribute['tag_slug'] = Str::slug($attribute['tag_name']);
 
-        $result = $tag->update([
+        return $tag->update([
             'tag_name' => $attribute['tag_name'],
             'tag_slug' => $attribute['tag_slug'],
         ]);
-
-        return $result;
     }
 
     public function deleteData($tag)
     {
-        $result = $tag->delete();
-        return $result;
+        return $tag->delete();
     }
 
-    public function findTagByPaginate() 
+    public function findTagByPaginate()
     {
         return $this->tag->paginate(10);
     }

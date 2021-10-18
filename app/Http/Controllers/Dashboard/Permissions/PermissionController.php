@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Dashboard\Permissions;
 
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Repositories\PermissionRepositoryInterface;
@@ -13,19 +12,19 @@ class PermissionController extends Controller
 
     protected $permissionRepository;
 
-    public function __construct(PermissionRepositoryInterface $permissionRepository) 
+    public function __construct(PermissionRepositoryInterface $permissionRepository)
     {
         $this->permissionRepository = $permissionRepository;
     }
 
-    public function create() 
+    public function create()
     {
         $permissions = $this->permissionRepository->findAll();
         $permission = new Permission;
         return view('backend.role-and-management.permissions.create', compact('permissions', 'permission'));
     }
 
-    public function store() 
+    public function store()
     {
         request()->validate([
             'permission_name' => 'required|unique:permissions,name',
@@ -38,12 +37,12 @@ class PermissionController extends Controller
         return redirect()->back()->with('success', 'New Permission has been added');
     }
 
-    public function edit(Permission $permission) 
+    public function edit(Permission $permission)
     {
         return view('backend.role-and-management.permissions.edit', compact('permission'));
     }
 
-    public function update(Permission $permission) 
+    public function update(Permission $permission)
     {
         request()->validate([
             'permission_name' => ['required', Rule::unique('permissions', 'name')->ignore($permission)],
@@ -55,7 +54,7 @@ class PermissionController extends Controller
         return redirect()->route('menu.permission.create')->with('success', 'Permission has been updated');
     }
 
-    public function destroy(Permission $permission) 
+    public function destroy(Permission $permission)
     {
         $this->permissionRepository->deleteData($permission);
         return redirect()->back()->with('success', 'Permission has been deleted');

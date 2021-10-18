@@ -9,14 +9,14 @@ use App\Models\User;
 
 class ListDataController extends Controller
 {
-    
-    public function indexDataArticles() 
+
+    public function indexDataArticles()
     {
-        $articles = Article::with('author', 'category', 'tags')->latest()->paginate(10);
+        $articles = Article::with(['author', 'category', 'tags'])->latest()->paginate(10);
         return view('backend.list-article-and-user.articles.index', compact('articles'));
     }
 
-    public function indexDataUsers() 
+    public function indexDataUsers()
     {
         $users = User::with('roles')->latest()->paginate(10);
         return view('backend.list-article-and-user.users.index', compact('users'));
@@ -28,7 +28,7 @@ class ListDataController extends Controller
         return response(['id' => $user->id, 'name' => $user->name]);
     }
 
-    public function suspend() 
+    public function suspend()
     {
         request()->validate([
             'suspend_until' => 'required', 'datetime',
@@ -44,7 +44,7 @@ class ListDataController extends Controller
             'suspend_user' => request('suspend_until'),
         ]);
 
-        return redirect()->back()->with('success', "Success Suspend User {$user->email}");
+        return redirect()->back()->with('success', "Success Suspend User $user->email");
     }
 
     public function recovery(User $user)
@@ -53,7 +53,7 @@ class ListDataController extends Controller
             'suspend_user' => null
         ]);
 
-        return redirect()->back()->with('success', "Success Recovery User {$user->email}");
+        return redirect()->back()->with('success', "Success Recovery User $user->email");
     }
 
 }

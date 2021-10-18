@@ -13,40 +13,37 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 class RoleToUserController extends Controller
 {
-    public function create() 
+    public function create()
     {
         $users = User::with('roles')->latest()->paginate(10);
         $roles = Role::get();
         return view('backend.role-and-management.role-to-user.create', compact('users', 'roles'));
     }
 
-    public function store() 
+    public function store()
     {
         request()->validate([
             'user_email' => 'required|email',
             'roles' => 'required|array',
         ]);
 
-        try {
-            $user = User::where('email', request('user_email'))->first();
-            Role::findOrFail(request('roles'));
-            if (!$user) {
-                return redirect()->back()->with('error', "User email doesn't match in our database.");
-            }
-            $user->assignRole(request('roles'));
-            return redirect()->back()->with('success', "Roles has been assigned to User {$user->email}");
-        } catch (ModelNotFoundException $e) {
-            return redirect()->back()->with('error', 'Something went wrong.');
+        $user = User::where('email', request('user_email'))->firstOrFail();
+        Role::findOrFail(request('roles'));
+        if (!$user) {
+            return redirect()->back()->with('error', "User email doesn't match in our database.");
         }
+        $user->assignRole(request('roles'));
+
+        return redirect()->back()->with('success', "Roles has been assigned to User $user->email");
     }
 
-    public function edit(User $user) 
+    public function edit(User $user)
     {
         $roles = Role::get();
         return view('backend.role-and-management.role-to-user.sync', compact('user', 'roles'));
     }
 
-    public function sync(Request $request, User $user) 
+    public function sync(Request $request, User $user)
     {
         request()->validate([
             'roles' => 'required|array',
@@ -61,12 +58,9 @@ class RoleToUserController extends Controller
             return redirect()->back()->with('error', "Something went wrong!");
         }
 
-        try {
-            Role::findOrFail(request('roles'));
-            $user->syncRoles(request('roles'));
-            return redirect()->route('menu.role.user.create')->with('success', "Role has been Synchronize to User {$user->email}");
-        } catch (ModelNotFoundException $er) {
-            return redirect()->back()->with('error', "Something went wrong!");
-        }
+        Role::findOrFail(request('roles'));
+        $user->syncRoles(request('roles'));
+
+        return redirect()->route('menu.role.user.create')->with('success', "Role has been Synchronize to User $user->email");
     }
 }

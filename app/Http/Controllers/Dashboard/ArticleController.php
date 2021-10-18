@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Dashboard;
 
 use Exception;
 use App\Models\Article;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticleRequest;
 use App\Repositories\TagRepositoryInterface;
 use App\Repositories\ArticleRepositoryInterface;
 use App\Repositories\CategoryRepositoryInterface;
-use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -43,17 +41,12 @@ class ArticleController extends Controller
     public function store(ArticleRequest $request)
     {
         try {
-            $attribute = request()->all();
+            $attribute = $request->all();
             $this->articleRepository->saveData($attribute);
             return redirect()->back()->with('success', 'Successfully create a new article.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong.');
         }
-    }
-
-    public function show($id)
-    {
-        //
     }
 
     public function edit(Article $article)
@@ -66,7 +59,7 @@ class ArticleController extends Controller
 
     public function update(Request $request, Article $article)
     {
-        request()->validate([
+        $request->validate([
             'article_title' => ['required', 'min:10'],
             'article_content' => ['required', 'min:250'],
             'article_thumbnail' => ['mimes:jpeg,jpg,png', 'max:5000'],
@@ -75,15 +68,15 @@ class ArticleController extends Controller
         ]);
 
         try {
-            $attribute = request()->all();
+            $attribute = $request->all();
 
-            if ( request()->file('article_thumbnail') ) {
-                $attribute['article_thumbnail'] = request('article_thumbnail');
+            if ( $request->file('article_thumbnail') ) {
+                $attribute['article_thumbnail'] = $request->article_thumbnail;
             } else {
                 $attribute['article_thumbnail'] = null;
             }
-
             $this->articleRepository->updateData($article, $attribute);
+
             return redirect()->route('menu.article.index')->with('success', 'Successfully update the article.');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong.');
@@ -101,6 +94,6 @@ class ArticleController extends Controller
     {
         $src = request('src');
         $this->articleRepository->deleteImageContent($src);
-        return response()->json('success', 200);
+        return response()->json('success');
     }
 }

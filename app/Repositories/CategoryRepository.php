@@ -10,7 +10,7 @@ class CategoryRepository implements CategoryRepositoryInterface {
 
     protected $category;
 
-    public function __construct(Category $category) 
+    public function __construct(Category $category)
     {
         $this->category = $category;
     }
@@ -18,8 +18,8 @@ class CategoryRepository implements CategoryRepositoryInterface {
     public function findAll()
     {
         return $this->category->with(['articles' => function($q) {
-            $q->where('article_status', 'Publish')->latest()->with('author:id,name,username', 'category:id,category_name');
-        }])->get();
+            $q->published()->latest()->with('author:id,name,username');
+        }])->withCount('articles')->get();
     }
 
     public function findById($id)
@@ -30,26 +30,22 @@ class CategoryRepository implements CategoryRepositoryInterface {
     public function saveData($attribute)
     {
         $attribute['category_slug'] = Str::slug($attribute['category_name']);
-        
-        $result = $this->category->create([
+
+        return $this->category->create([
             'category_name' => $attribute['category_name'],
             'category_slug' => $attribute['category_slug'],
             'category_description' => $attribute['category_description'],
         ]);
-
-        return $result;
     }
 
     public function updateData($category, $attribute)
     {
         $attribute['category_slug'] = Str::slug($attribute['category_name']);
-        $result = $category->update([
+        return $category->update([
             'category_name' => $attribute['category_name'],
             'category_slug' => $attribute['category_slug'],
             'category_description' => $attribute['category_description'],
         ]);
-
-        return $result;
     }
 
     public function deleteData($category)
@@ -63,7 +59,7 @@ class CategoryRepository implements CategoryRepositoryInterface {
         }
     }
 
-    public function findPaginate() 
+    public function findPaginate()
     {
         return $this->category->paginate(10);
     }

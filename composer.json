@@ -13,13 +13,13 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.5",
-        "laravel/framework": "^8.12",
+        "laravel/framework": "^v8.64.0",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "spatie/laravel-permission": "^4.0"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.5",
+        "barryvdh/laravel-debugbar": "^v3.6.2",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",

@@ -13,7 +13,7 @@ class CategoryController extends Controller
 
     protected $categoryRepository;
 
-    public function __construct(CategoryRepositoryInterface $categoryRepository) 
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
     }
@@ -32,14 +32,9 @@ class CategoryController extends Controller
 
     public function store(CategoryRequest $request)
     {
-        $attribute = request()->all();
+        $attribute = $request->all();
         $this->categoryRepository->saveData($attribute);
         return redirect()->back()->with('success', 'Category has been added.');
-    }
-
-    public function show($id)
-    {
-        //
     }
 
     public function edit(Category $category)
@@ -49,7 +44,7 @@ class CategoryController extends Controller
 
     public function update(CategoryRequest $request, Category $category)
     {
-        $attribute = request()->all();
+        $attribute = $request->all();
         $this->categoryRepository->updateData($category, $attribute);
         return redirect()->route('menu.category.index')->with('success', 'Category has been updated.');
     }

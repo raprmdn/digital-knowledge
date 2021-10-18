@@ -12,37 +12,34 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PermissionToRoleController extends Controller
 {
-    public function create() 
+    public function create()
     {
         $roles = Role::with('permissions')->get();
         $permissions = Permission::get();
         return view('backend.role-and-management.permission-to-role.create', compact('roles', 'permissions'));
     }
 
-    public function store() 
+    public function store()
     {
         request()->validate([
             'role' => 'required',
             'permissions' => 'required|array'
         ]);
 
-        try{
-            $role = Role::findOrFail(request('role'));
-            Permission::findOrFail(request('permissions'));
-            $role->givePermissionTo(request('permissions'));
-            return redirect()->back()->with('success', "Permission has been assigned to Role {$role->name}");
-        }catch(ModelNotFoundException $e) {
-            return redirect()->back()->with('error', "Something went wrong!");
-        }
+        $role = Role::findOrFail(request('role'));
+        Permission::findOrFail(request('permissions'));
+        $role->givePermissionTo(request('permissions'));
+
+        return redirect()->back()->with('success', "Permission has been assigned to Role $role->name");
     }
 
-    public function edit(Role $role) 
+    public function edit(Role $role)
     {
         $permissions = Permission::get();
         return view('backend.role-and-management.permission-to-role.sync', compact('role', 'permissions'));
     }
 
-    public function sync(Request $request, Role $role) 
+    public function sync(Request $request, Role $role)
     {
         request()->validate([
             'permissions' => 'required|array',

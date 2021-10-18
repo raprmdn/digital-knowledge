@@ -11,8 +11,8 @@ use Intervention\Image\ImageManagerStatic as Image;
 class UserRepository implements UserRepositoryInterface {
 
     protected $user;
-    
-    public function __construct(User $user) 
+
+    public function __construct(User $user)
     {
         $this->user = $user;
     }
@@ -24,7 +24,7 @@ class UserRepository implements UserRepositoryInterface {
 
     public function updatePersonalInformation($user, $attribute)
     {
-        $result = $user->update([
+        return $user->update([
             'name' => $attribute['full_name'],
             'username' => $attribute['username'],
             'profile_description' => $attribute['profile_description'],
@@ -32,27 +32,23 @@ class UserRepository implements UserRepositoryInterface {
             'twitter' => $attribute['twitter'],
             'facebook' => $attribute['facebook'],
         ]);
-
-        return $result;
     }
 
-    public function updatePassword($user, $attribute) 
+    public function updatePassword($user, $attribute)
     {
         $currentPassword = $user->password;
         $oldPassword = $attribute['current_password'];
 
         if ( Hash::check($oldPassword, $currentPassword) ) {
-            $result = $user->update([
+            return $user->update([
                 'password' => bcrypt(request('password')),
             ]);
-
-            return $result;
         } else {
             throw new Exception('Wrong Current Password.');
         }
     }
 
-    public function updateEmail($user, $attribute) 
+    public function updateEmail($user, $attribute)
     {
         $result = $user->update([
             'email' => $attribute['email'],
@@ -64,7 +60,7 @@ class UserRepository implements UserRepositoryInterface {
         return $result;
     }
 
-    public function updatePhotoProfile($user, $attribute) 
+    public function updatePhotoProfile($user, $attribute)
     {
         $photoProfileSrc = $attribute['photo_profile'];
 
@@ -72,16 +68,13 @@ class UserRepository implements UserRepositoryInterface {
         $photoProfileName = time() . '-' . uniqid() . '.' .$photoExtensions;
 
         $photo = Image::make($photoProfileSrc)->resize(300, 300);
-        $photo->stream($photoExtensions, 90);
+        $photo->stream($photoExtensions);
         Storage::disk('public')->put('profile/' . $photoProfileName, $photo, 'public');
 
         $photoProfile = 'profile/' . $photoProfileName;
 
-        $result = $user->update([
+        return $user->update([
             'profile_picture' => $photoProfile,
         ]);
-
-        return $result;
     }
-
 }

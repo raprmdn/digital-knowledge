@@ -13,7 +13,7 @@ class TagController extends Controller
 
     protected $tagRepository;
 
-    public function __construct(TagRepositoryInterface $tagRepository) 
+    public function __construct(TagRepositoryInterface $tagRepository)
     {
         $this->tagRepository = $tagRepository;
     }
@@ -32,15 +32,10 @@ class TagController extends Controller
 
     public function store(TagRequest $request)
     {
-        $attribute = request()->all();
+        $attribute = $request->all();
         $this->tagRepository->saveData($attribute);
-        
-        return redirect()->back()->with('success', 'New Tag has been added.');
-    }
 
-    public function show($id)
-    {
-        //
+        return redirect()->back()->with('success', 'New Tag has been added.');
     }
 
     public function edit(Tag $tag)
@@ -50,8 +45,7 @@ class TagController extends Controller
 
     public function update(TagRequest $request, Tag $tag)
     {
-        $attribute = request()->all();
-
+        $attribute = $request->all();
         $this->tagRepository->updateData($tag, $attribute);
 
         return redirect()->route('menu.tag.index')->with('success', 'Tag has been updated.');

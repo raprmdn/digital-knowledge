@@ -15,7 +15,7 @@ class SearchController extends Controller
     {
         $query = request('search_query');
         $articles = Article::where("article_title", "ilike", "%$query%")
-                    ->with('author:id,name,username', 'category:id,category_name,category_slug')
+                    ->with(['author:id,name,username', 'category:id,category_name,category_slug'])
                     ->latest()->paginate(10);
         $categories = Category::get();
         $tags = Tag::get();
@@ -27,7 +27,7 @@ class SearchController extends Controller
         $query = request('query');
         $id = auth()->user()->id;
         $articles = Article::where("article_title", "ilike", "%$query%")->where('article_user_id', $id)
-                    ->with('author', 'category', 'tags')
+                    ->with(['author', 'category', 'tags'])
                     ->latest()->paginate(10);
         return view('backend.articles.index', compact('articles'));
     }
@@ -36,7 +36,7 @@ class SearchController extends Controller
     {
         $query = request('query');
         $articles = Article::where("article_title", "ilike", "%$query%")
-                    ->with('author', 'category', 'tags')
+                    ->with(['author', 'category', 'tags'])
                     ->latest()->paginate(10);
         return view('backend.list-article-and-user.articles.index', compact('articles'));
     }

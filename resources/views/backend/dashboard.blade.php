@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <p>Hi {{ Auth::user()->name }}, Welcome to Dashboard Digital-Knowledge!</p>
-                <p>Please be kind, and supporting us. Feel free to ask, contact email : cs.digital.knowledge@gmail.com</p>
+                <p>Please be kind, and supporting us. Feel free to ask, contact email : raprmdn@gmail.com</p>
             </div>
         </div>
     </div>

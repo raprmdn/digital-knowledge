@@ -11,21 +11,21 @@ use Spatie\Permission\Models\Permission;
 class ManageMenuController extends Controller
 {
 
-    public function index() 
+    public function index()
     {
-        $menuLists = ManageMenu::with('children')->where('parent_id', null)->orderBy('position', 'asc')->get();
+        $menuLists = ManageMenu::with('children')->where('parent_id', null)->orderBy('position')->get();
         $menuTables = ManageMenu::with('parent')->whereNotNull('parent_id', null)->get();
         return view('backend.menu-management.list', compact('menuLists', 'menuTables'));
     }
 
-    public function create() 
+    public function create()
     {
         $permissions = Permission::get();
         $parents = ManageMenu::where('parent_id', null)->get();
         return view('backend.menu-management.create', compact('permissions', 'parents'));
     }
 
-    public function store() 
+    public function store()
     {
         request()->validate([
             'permission' => 'required',
@@ -33,16 +33,12 @@ class ManageMenuController extends Controller
             'menu_position' => 'nullable|numeric|min:1',
         ]);
 
-        try {
-            $attr = request('parent_menu');
-            if ($attr) {
-                ManageMenu::where('id', request('parent_menu'))->firstOrFail();
-            }
-            Permission::where('name', request('permission'))->firstOrFail();
-        } catch (ModelNotFoundException $er) {
-            return redirect()->back()->with('error', 'Something went wrong..');
+        $attr = request('parent_menu');
+        if ($attr) {
+            ManageMenu::where('id', request('parent_menu'))->firstOrFail();
         }
-        // dd(request()->all());
+        Permission::where('name', request('permission'))->firstOrFail();
+
         ManageMenu::create([
             'position' => request('menu_position') ?? null,
             'parent_id' => request('parent_menu') ?? null,
@@ -55,19 +51,19 @@ class ManageMenuController extends Controller
         return redirect()->back()->with('success', 'Successfully added new menu.');
     }
 
-    public function edit(ManageMenu $menu) 
+    public function edit(ManageMenu $menu)
     {
         $permissions = Permission::get();
         $parents = ManageMenu::where('parent_id', null)->get();
         return view('backend.menu-management.edit', compact('menu', 'permissions', 'parents'));
     }
 
-    public function update(ManageMenu $menu) 
+    public function update(ManageMenu $menu)
     {
         request()->validate([
             'parent_menu' => 'required',
             'permission' => 'required',
-            'menu_name' => 'required', 
+            'menu_name' => 'required',
             'url' => 'required',
         ]);
 
@@ -81,13 +77,13 @@ class ManageMenuController extends Controller
         return redirect()->route('menu.menu.list')->with('success', 'Sub Menu has been updated.');
     }
 
-    public function editMainMenu(ManageMenu $menu) 
+    public function editMainMenu(ManageMenu $menu)
     {
         $permissions = Permission::get();
         return view('backend.menu-management.main-edit', compact('menu', 'permissions'));
     }
 
-    public function updateMainMenu(ManageMenu $menu) 
+    public function updateMainMenu(ManageMenu $menu)
     {
         request()->validate([
             'permission' => 'required',
@@ -108,7 +104,7 @@ class ManageMenuController extends Controller
         return redirect()->route('menu.menu.list')->with('success', 'Main Menu has been updated.');
     }
 
-    public function destroy(ManageMenu $menu) 
+    public function destroy(ManageMenu $menu)
     {
         $menu->delete();
         return redirect()->route('menu.menu.list')->with('success', 'Menu has been deleted.');

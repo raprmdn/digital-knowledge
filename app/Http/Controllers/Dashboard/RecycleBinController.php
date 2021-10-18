@@ -9,19 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class RecycleBinController extends Controller
 {
-    
-    public function articleTrash() 
+
+    public function articleTrash()
     {
         $articles = Article::onlyTrashed()->paginate(10);
         return view('backend.recycle-bin.articles.index', compact('articles'));
     }
 
-    public function userTrash() 
-    {
-        return view('backend.recycle-bin.user.index');
-    }
-
-    public function articleRestore($article) 
+    public function articleRestore()
     {
         $article = Article::onlyTrashed()->first();
         $article->restore();
@@ -29,7 +24,7 @@ class RecycleBinController extends Controller
         return redirect()->back()->with('success', 'Article has been restored.');
     }
 
-    public function destroy($article) 
+    public function destroy()
     {
         $article = Article::onlyTrashed()->first();
 
@@ -37,7 +32,7 @@ class RecycleBinController extends Controller
         $dom = new \DOMDocument();
         $dom->loadHTML($article->article_content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $images = $dom->getElementsByTagName('img');
-        
+
         foreach ( $images as $key => $image ) {
 
             $path = asset('/storage');
@@ -49,7 +44,7 @@ class RecycleBinController extends Controller
         Storage::delete($article->article_thumbnail);
         $article->tags()->detach();
         $article->forceDelete();
-        
+
         return redirect()->back()->with('success', 'Article has been delete permanently');
     }
 

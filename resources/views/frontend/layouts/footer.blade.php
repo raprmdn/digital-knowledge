@@ -9,7 +9,8 @@
                     <div class="textwidget">
                         <p>
                             Start writing, no matter what. The water does not flow until the faucet is turned on.
-                            <br>( This website just for my portofolio )<br>( Website still on development )
+                            <br>( This website just for my portofolio )<br>( Website still on development )<br>
+                            Feel free to ask me at: raprmdn@gmail.com
                         </p>
                         <p><strong class="color-black">Address</strong><br>
                             Jakarta,<br>

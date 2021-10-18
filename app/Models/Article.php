@@ -10,27 +10,32 @@ class Article extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['article_user_id', 'article_category_id', 'article_title', 'article_slug', 
+    protected $fillable = ['article_user_id', 'article_category_id', 'article_title', 'article_slug',
     'article_content', 'article_thumbnail', 'article_status', 'article_view_count', 'created_at', 'edited_at'];
 
     // protected $with = ['author', 'category'];
 
-    public function author() 
+    public function author()
     {
         return $this->belongsTo(User::class, 'article_user_id');
     }
 
-    public function category() 
+    public function category()
     {
         return $this->belongsTo(Category::class, 'article_category_id');
     }
 
-    public function tags() 
+    public function tags()
     {
         return $this->belongsToMany(Tag::class);
     }
 
     public function getTakeImageAttribute() {
         return "/storage/" . $this->article_thumbnail;
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('article_status', 'Publish');
     }
 }
