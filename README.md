@@ -1,62 +1,68 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Digital Knowledge
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Digital Knowledge is website article.
 
-## About Laravel
+## Installation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Clone this repository, `git clone` and `cd` into it. <br>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Open the terminal and run `composer install`. <br>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Copy the .env, type in terminal `cp .env.example .env`. <br>
 
-## Learning Laravel
+Setup .env file. <br>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Go to the terminal and run command: 
+```
+php artisan key:generate 
+```
+Run migration and seeder:
+```
+php artisan migrate --seed 
+```
+Run:
+```
+php artisan server
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Credentials for Super Admin: <br>
+email    : admin@digitalknowledge.com <br>
+password : 123123123
 
-## Laravel Sponsors
+## Sneak Peek
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+![Homepage](https://user-images.githubusercontent.com/71953516/150064502-7f035a1b-2191-49db-adc6-9de7fe6961f3.png)
 
-### Premium Partners
+![Homepage2](https://user-images.githubusercontent.com/71953516/150064539-674133d7-c0c0-4b83-9132-2fb74142e207.png)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+![View-category](https://user-images.githubusercontent.com/71953516/150064603-162e9860-ce62-470b-ba27-526c00d44ce8.png)
 
-## Contributing
+![profile-view](https://user-images.githubusercontent.com/71953516/150064621-ed3d9451-8704-41cd-8f48-3dfe384ef249.png)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+![dashboard](https://user-images.githubusercontent.com/71953516/150064635-f705bd9f-5217-4079-bd1a-6b65d5663ee2.png)
 
-## Code of Conduct
+![create-article](https://user-images.githubusercontent.com/71953516/150064649-db72edf6-9b22-4a36-bd86-a893049212d3.png)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+![list-article](https://user-images.githubusercontent.com/71953516/150064667-44c30112-2118-4770-b133-415c2c98966c.png)
 
-## Security Vulnerabilities
+![list-category](https://user-images.githubusercontent.com/71953516/150064696-83348f86-47d2-4131-a639-e9a2d7517e63.png)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+![list-tag](https://user-images.githubusercontent.com/71953516/150064700-7b5e8b25-53a1-46d5-b2b7-49cb1a5d3661.png)
 
-## License
+![roles](https://user-images.githubusercontent.com/71953516/150064719-f6c531e1-6693-4214-b427-6746f5904541.png)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+![permissions](https://user-images.githubusercontent.com/71953516/150064748-1f07a38a-9875-46da-a872-5fbd2b7d8004.png)
+
+![permission-to-role](https://user-images.githubusercontent.com/71953516/150064759-fb5adef9-215c-442a-ab34-54be49e96180.png)
+
+![assign-role](https://user-images.githubusercontent.com/71953516/150064785-2df87115-c63e-4a62-9a7a-8ad48063d3f2.png)
+
+![list-menu](https://user-images.githubusercontent.com/71953516/150064810-e67244af-250a-4f36-adc2-c91f045efaac.png)
+
+![create-menu](https://user-images.githubusercontent.com/71953516/150064820-82896d28-01c9-49fb-8b88-6255b972fb03.png)
+
+![trash-post](https://user-images.githubusercontent.com/71953516/150064830-687d5497-c3f4-47d5-a4c2-376551857090.png)
+
+![personal-information](https://user-images.githubusercontent.com/71953516/150064837-f2cc5730-887d-4b1f-b58d-3bdb83d019cb.png)
+
+![security-testing](https://user-images.githubusercontent.com/71953516/150064858-7d52e364-7e0d-460c-895f-a7201c297f6a.png)
